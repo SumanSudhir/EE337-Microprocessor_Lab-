@@ -1,0 +1,3 @@
+".\Objects\subtraction2s.obj" 
+TO ".\Objects\project4lw" 
+PRINT(".\Listings\project4lw.m51") RAMSIZE(256) 

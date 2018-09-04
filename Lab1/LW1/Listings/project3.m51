@@ -1,0 +1,59 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        08/02/2018  21:27:33  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\add2s.obj TO .\Objects\project3 PRINT (.\Listings\project3.m51) RAMSIZE (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\add2s.obj (ADD2S)
+
+
+LINK MAP OF MODULE:  .\Objects\project3 (ADD2S)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0122H     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\project3 (ADD2S)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ADD2S
+  C:0120H         SYMBOL        HERE
+  C:0100H         SYMBOL        MAIN
+  C:0000H         LINE#         2
+  C:0100H         LINE#         7
+  C:0102H         LINE#         8
+  C:0104H         LINE#         10
+  C:0106H         LINE#         11
+  C:0108H         LINE#         13
+  C:010AH         LINE#         15
+  C:010CH         LINE#         16
+  C:010FH         LINE#         17
+  C:0111H         LINE#         18
+  C:0112H         LINE#         19
+  C:0114H         LINE#         20
+  C:0117H         LINE#         21
+  C:0119H         LINE#         22
+  C:011AH         LINE#         23
+  C:011CH         LINE#         24
+  C:011EH         LINE#         25
+  C:0120H         LINE#         27
+  -------         ENDMOD        ADD2S
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0025H BYTE ( 1%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=290
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

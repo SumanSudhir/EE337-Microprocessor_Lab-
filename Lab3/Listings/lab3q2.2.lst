@@ -1,0 +1,59 @@
+A51 MACRO ASSEMBLER  LAB3Q2_2                                                             08/15/2018 23:47:40 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\lab3q2.2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE lab3q2.2.asm SET(SMALL) DEBUG PRINT(.\Listings\lab3q2.2.lst) OBJECT(.\O
+                      bjects\lab3q2.2.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0090                 1     LED EQU P1
+0000                   2     ORG 00H
+0000 020100            3     LJMP MAIN
+0100                   4     ORG 100H
+0100                   5     MAIN:
+                       6             
+0100 D297              7             SETB P1.7
+0102 D296              8             SETB P1.6
+0104 D295              9             SETB P1.5
+0106 D294             10             SETB P1.4
+                      11             
+                      12             
+0108 E590             13             MOV A,P1
+010A 5403             14             ANL A,#00000011B
+010C F550             15             MOV 50H,A
+                      16             
+010E E590             17             MOV A,P1
+0110 540C             18             ANL A,#00001100B
+0112 03               19             RR A
+0113 03               20             RR A
+0114 F551             21             MOV 51H,A
+                      22             
+0116 A850             23             MOV R0,50H
+0118 E551             24             MOV A,51H
+011A 28               25             ADD A,R0
+                      26             
+011B C4               27             SWAP A
+011C F590             28             MOV P1,A
+011E 80FE             29             HERE:SJMP HERE
+                      30             
+                      31     END
+A51 MACRO ASSEMBLER  LAB3Q2_2                                                             08/15/2018 23:47:40 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   011EH   A   
+LED. . . . . . . .  D ADDR   0090H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

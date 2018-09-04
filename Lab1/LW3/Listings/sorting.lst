@@ -1,0 +1,60 @@
+A51 MACRO ASSEMBLER  SORTING                                                              08/02/2018 23:10:46 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\sorting.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE sorting.asm SET(SMALL) DEBUG PRINT(.\Listings\sorting.lst) OBJECT(.\Obj
+                      ects\sorting.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+0100                   4     MAIN:
+0100 85606F            5                     MOV 6FH,60H
+0103 856170            6                     MOV 70H,61H
+0106 856271            7                     MOV 71H,62H
+0109 856372            8                     MOV 72H,63H
+010C 856473            9                     MOV 73H,64H
+                      10                             
+010F 7C05             11     MOV R4,#5
+0111 7B05             12     AGAIN: MOV R3,#5
+0113 786F             13             MOV R0,#6FH
+0115 C3               14             CLR C
+0116 E6               15     UP: MOV A,@R0
+0117 F9               16             MOV R1,A
+0118 08               17             INC R0
+0119 E6               18             MOV A,@R0
+011A 99               19             SUBB A,R1
+011B 5006             20             JNC SKIP    ;if carry is zero
+011D E6               21             MOV A,@R0
+011E 18               22             DEC R0
+011F F6               23             MOV @R0,A
+0120 E9               24             MOV A,R1
+0121 08               25             INC R0
+0122 F6               26             MOV @R0,A
+0123 DBF1             27     SKIP:DJNZ R3,UP
+0125 DCEA             28             DJNZ R4,AGAIN
+                      29             
+0127 80FE             30             HERE:SJMP HERE
+                      31     END
+A51 MACRO ASSEMBLER  SORTING                                                              08/02/2018 23:10:46 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AGAIN. . . . . . .  C ADDR   0111H   A   
+HERE . . . . . . .  C ADDR   0127H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+SKIP . . . . . . .  C ADDR   0123H   A   
+UP . . . . . . . .  C ADDR   0116H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

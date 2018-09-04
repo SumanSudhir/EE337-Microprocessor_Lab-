@@ -1,0 +1,3 @@
+".\Objects\sorting.obj" 
+TO ".\Objects\project5lw" 
+PRINT(".\Listings\project5lw.m51") RAMSIZE(256) 

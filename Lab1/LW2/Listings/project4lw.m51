@@ -1,0 +1,72 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        08/02/2018  21:01:55  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\subtraction2s.obj TO .\Objects\project4lw PRINT (.\Listings\project4lw.m51) RAMSIZ
+>> E (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\subtraction2s.obj (SUBTRACTION2S)
+
+
+LINK MAP OF MODULE:  .\Objects\project4lw (SUBTRACTION2S)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0131H     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\project4lw (SUBTRACTION2S)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        SUBTRACTION2S
+  C:012FH         SYMBOL        HERE
+  C:0100H         SYMBOL        MAIN
+  C:0000H         LINE#         2
+  C:0100H         LINE#         7
+  C:0102H         LINE#         8
+  C:0103H         LINE#         9
+  C:0105H         LINE#         10
+  C:0107H         LINE#         12
+  C:0108H         LINE#         14
+  C:010AH         LINE#         15
+  C:010BH         LINE#         16
+  C:010DH         LINE#         18
+  C:010FH         LINE#         21
+  C:0111H         LINE#         22
+  C:0113H         LINE#         24
+  C:0115H         LINE#         25
+  C:0117H         LINE#         27
+  C:0119H         LINE#         29
+  C:011BH         LINE#         30
+  C:011EH         LINE#         31
+  C:0120H         LINE#         32
+  C:0121H         LINE#         33
+  C:0123H         LINE#         34
+  C:0126H         LINE#         35
+  C:0128H         LINE#         36
+  C:0129H         LINE#         37
+  C:012BH         LINE#         38
+  C:012DH         LINE#         39
+  C:012FH         LINE#         41
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/02/2018  21:01:55  PAGE 2
+
+
+  -------         ENDMOD        SUBTRACTION2S
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0034H BYTE ( 2%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=305
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

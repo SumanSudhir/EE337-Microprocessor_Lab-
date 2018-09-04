@@ -1,0 +1,98 @@
+A51 MACRO ASSEMBLER  QUES1                                                                08/17/2018 17:20:37 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\ques1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE ques1.asm SET(SMALL) DEBUG PRINT(.\Listings\ques1.lst) OBJECT(.\Objects
+                      \ques1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0090                 1     LED EQU P1 
+0000                   2     ORG 00H
+0000 02011C            3     LJMP MAIN
+0100                   4     ORG 100H
+                       5     
+0100                   6     DELAY:
+                       7             USING 0
+0100 C001              8             PUSH AR1
+0102 C002              9             PUSH AR2
+0104 C003             10             PUSH AR3
+0106 C0D0             11             PUSH PSW
+                      12     
+0108 FB               13             MOV R3,A
+0109                  14     LOOP:
+0109 7AC8             15             MOV R2,#200
+010B                  16             BACK1:
+010B 79FF             17             MOV R1,#0FFH
+010D                  18             BACK :
+010D D9FE             19             DJNZ R1, BACK
+010F DAFA             20             DJNZ R2, BACK1
+0111 DBF6             21             DJNZ R3,LOOP
+                      22             
+0113 D0D0             23             POP PSW
+0115 D003             24             POP AR3
+0117 D002             25             POP AR2
+0119 D001             26             POP AR1
+011B 22               27     RET
+011C                  28             MAIN:
+011C D290             29                             SETB P1.0
+011E D291             30                             SETB P1.1
+0120 D292             31                             SETB P1.2
+0122 D293             32                             SETB P1.3
+                      33                             
+0124                  34                             TOGGLE:
+0124 E590             35                                             MOV A, P1
+0126 540F             36                                             ANL A,#0FH
+0128 75F005           37                                             MOV B, #5
+012B A4               38                                             MUL AB
+                      39                                             
+012C 120100           40                                             LCALL DELAY
+012F B295             41                                             CPL P1.5      ;D/4
+                      42                                             
+0131 120100           43                                             LCALL DELAY
+0134 B295             44                                             CPL P1.5                        
+0136 B296             45                                             CPL P1.6 
+                      46                                             
+0138 120100           47                                             LCALL DELAY
+013B B295             48                                             CPL P1.5       ;3D/4
+                      49                                             
+013D 120100           50                                             LCALL DELAY
+0140 B295             51                                             CPL P1.5
+0142 B296             52                                             CPL P1.6        ;D
+0144 B297             53                                             CPL P1.7         ;D
+                      54                                             
+0146 80DC             55                                             SJMP TOGGLE
+                      56     END
+                                                     
+A51 MACRO ASSEMBLER  QUES1                                                                08/17/2018 17:20:37 PAGE     2
+
+                                     
+                                     
+A51 MACRO ASSEMBLER  QUES1                                                                08/17/2018 17:20:37 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR2. . . . . . . .  D ADDR   0002H   A   
+AR3. . . . . . . .  D ADDR   0003H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+BACK . . . . . . .  C ADDR   010DH   A   
+BACK1. . . . . . .  C ADDR   010BH   A   
+DELAY. . . . . . .  C ADDR   0100H   A   
+LED. . . . . . . .  D ADDR   0090H   A   
+LOOP . . . . . . .  C ADDR   0109H   A   
+MAIN . . . . . . .  C ADDR   011CH   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+PSW. . . . . . . .  D ADDR   00D0H   A   
+TOGGLE . . . . . .  C ADDR   0124H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

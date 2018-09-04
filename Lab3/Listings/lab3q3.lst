@@ -1,0 +1,119 @@
+A51 MACRO ASSEMBLER  LAB3Q3                                                               08/17/2018 18:10:30 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\lab3q3.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE lab3q3.asm SET(SMALL) DEBUG PRINT(.\Listings\lab3q3.lst) OBJECT(.\Objec
+                      ts\lab3q3.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0090                 1     LED EQU P1
+0000                   2     ORG 00H
+0000 02014F            3     LJMP MAIN
+0100                   4     ORG 100H
+                       5             
+0100                   6     DELAY:
+                       7             USING 0
+0100 C001              8             PUSH AR1
+0102 C002              9             PUSH AR2
+0104 C003             10             PUSH AR3
+0106 C0D0             11             PUSH PSW
+                      12     
+0108 FB               13             MOV R3,A
+0109                  14     LOOP:
+0109 7AC8             15             MOV R2,#200
+010B                  16             BACK1:
+010B 79FF             17             MOV R1,#0FFH
+010D                  18             BACK :
+010D D9FE             19             DJNZ R1, BACK
+010F DAFA             20             DJNZ R2, BACK1
+0111 DBF6             21             DJNZ R3,LOOP
+                      22             
+0113 D0D0             23             POP PSW
+0115 D003             24             POP AR3
+0117 D002             25             POP AR2
+0119 D001             26             POP AR1
+011B 22               27     RET
+                      28     
+011C                  29     LOADING_A:
+011C 7590FF           30             MOV P1,#0FFH    ;LED HIGH
+                      31             ;MOV A,P1
+                      32             
+011F 7464             33             MOV A,#100       ;DELAY OF 5S 
+0121 120100           34             LCALL DELAY
+                      35             
+0124 C297             36             CLR P1.7
+0126 C296             37             CLR P1.6
+0128 C295             38             CLR P1.5
+012A C294             39             CLR P1.4
+                      40             
+012C 7414             41             MOV A,#20
+012E 120100           42             LCALL DELAY         ;DELAY OF 1S
+                      43             
+0131 E590             44             MOV A,P1
+0133 22               45     RET
+0134                  46     READNIBBLE:
+0134 12011C           47             LCALL LOADING_A
+                      48             
+0137 F6               49             MOV @R0,A
+0138 C4               50             SWAP A
+0139 F590             51             MOV P1,A
+                      52             
+013B 7464             53             MOV A,#100
+013D 120100           54             LCALL DELAY
+                      55             
+                      56             
+0140 12011C           57             LCALL LOADING_A       ;VERIFY
+A51 MACRO ASSEMBLER  LAB3Q3                                                               08/17/2018 18:10:30 PAGE     2
+
+0143 B40FEE           58             CJNE A,#0FH,READNIBBLE  
+0146 22               59     RET
+                      60     
+0147                  61     PACKNIBBLE:
+0147 E54E             62             MOV A, 4EH
+0149 C4               63             SWAP A
+014A 254F             64             ADD A, 4FH
+014C F550             65             MOV 50H, A
+014E 22               66     RET
+                      67     
+014F                  68     MAIN:
+014F 784E             69             MOV R0, #4EH
+0151 120134           70             LCALL READNIBBLE
+0154 784F             71             MOV R0, #4FH
+0156 120134           72             LCALL READNIBBLE
+0159 120147           73             LCALL PACKNIBBLE
+                      74             
+015C 80FE             75             HERE: SJMP HERE 
+                      76     END
+                                     
+                             
+A51 MACRO ASSEMBLER  LAB3Q3                                                               08/17/2018 18:10:30 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR2. . . . . . . .  D ADDR   0002H   A   
+AR3. . . . . . . .  D ADDR   0003H   A   
+BACK . . . . . . .  C ADDR   010DH   A   
+BACK1. . . . . . .  C ADDR   010BH   A   
+DELAY. . . . . . .  C ADDR   0100H   A   
+HERE . . . . . . .  C ADDR   015CH   A   
+LED. . . . . . . .  D ADDR   0090H   A   
+LOADING_A. . . . .  C ADDR   011CH   A   
+LOOP . . . . . . .  C ADDR   0109H   A   
+MAIN . . . . . . .  C ADDR   014FH   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+PACKNIBBLE . . . .  C ADDR   0147H   A   
+PSW. . . . . . . .  D ADDR   00D0H   A   
+READNIBBLE . . . .  C ADDR   0134H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

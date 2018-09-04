@@ -1,0 +1,110 @@
+A51 MACRO ASSEMBLER  3                                                                    08/15/2018 19:23:34 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\3.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 3.a51 SET(SMALL) DEBUG PRINT(.\Listings\3.lst) OBJECT(.\Objects\3.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+                       2     ;PROBLEM STATEMENT: BLINKING LEDS OF PORT0
+                       3     
+                       4     
+  0090                 5             LED EQU P1
+                       6     
+0000                   7             ORG 0000H
+0000 75900F            8             MOV P1,#15              
+0003 02012A            9             LJMP MAIN
+                      10     
+                      11     
+                      12     
+0100                  13             ORG 0100H
+                      14     
+0100                  15     DELAY:
+                      16             USING 0
+0100 C000             17             PUSH AR0
+0102 C001             18         PUSH AR1    
+0104 C0E0             19         PUSH ACC
+0106 C002             20         PUSH AR2
+0108 C003             21         PUSH AR3    
+                      22             
+010A AB4F             23     MOV R3 , 4FH   
+                      24     
+                      25     
+010C 00               26     HELLO : NOP    
+                      27             
+010D 75F00F           28                     MOV B,#15
+0110 7A81             29     DELAY3: MOV R2, #129
+0112 797F             30     DELAY2: MOV R1, #127
+0114 00               31             NOP
+0115 00               32             NOP
+0116                  33     DELAY1:
+                      34             
+0116 D9FE             35             DJNZ R1, DELAY1
+                      36     
+0118 DAF8             37             DJNZ R2, DELAY2
+011A D5F0F3           38             DJNZ B, DELAY3
+                      39            
+011D DBED             40             DJNZ R3,HELLO 
+                      41                     
+011F D003             42      POP AR3
+0121 D002             43      POP AR2
+0123 D0E0             44      POP ACC
+0125 D001             45      POP AR1
+0127 D000             46      POP AR0      
+0129 22               47             RET
+                      48     
+                      49     
+                      50     
+012A                  51     MAIN:
+012A E590             52             MOV A , P1   
+012C 540F             53             ANL A,#00001111B  
+012E F54F             54                     MOV 4FH,A  
+0130 7800             55     KUMAR : MOV R0, #00 
+0132 759000           56                     MOV LED,#00
+0135 7B08             57                     MOV R3 ,#08
+0137 E4               58                     CLR A
+A51 MACRO ASSEMBLER  3                                                                    08/15/2018 19:23:34 PAGE     2
+
+                      59                     
+0138 E8               60     HRISHIK : MOV A,R0 
+0139 23               61               RL A  
+013A C4               62                       SWAP A
+013B F590             63               MOV LED,A             
+013D 120100           64                       LCALL DELAY   
+0140 08               65               INC R0                 
+0141 DBF5             66                       DJNZ R3,HRISHIK
+                      67                       
+0143 80EB             68     SJMP KUMAR 
+                      69     END
+A51 MACRO ASSEMBLER  3                                                                    08/15/2018 19:23:34 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ACC. . . . . . . .  D ADDR   00E0H   A   
+AR0. . . . . . . .  D ADDR   0000H   A   
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR2. . . . . . . .  D ADDR   0002H   A   
+AR3. . . . . . . .  D ADDR   0003H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+DELAY. . . . . . .  C ADDR   0100H   A   
+DELAY1 . . . . . .  C ADDR   0116H   A   
+DELAY2 . . . . . .  C ADDR   0112H   A   
+DELAY3 . . . . . .  C ADDR   0110H   A   
+HELLO. . . . . . .  C ADDR   010CH   A   
+HRISHIK. . . . . .  C ADDR   0138H   A   
+KUMAR. . . . . . .  C ADDR   0130H   A   
+LED. . . . . . . .  D ADDR   0090H   A   
+MAIN . . . . . . .  C ADDR   012AH   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

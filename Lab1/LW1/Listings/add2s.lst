@@ -1,0 +1,54 @@
+A51 MACRO ASSEMBLER  ADD2S                                                                08/02/2018 21:27:33 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\add2s.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE add2s.asm SET(SMALL) DEBUG PRINT(.\Listings\add2s.lst) OBJECT(.\Objects
+                      \add2s.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+                       4                     
+0100                   5                     MAIN : 
+                       6                         
+0100 E561              7                             MOV A,61H       
+0102 2571              8                             ADD A,71H
+                       9                             
+0104 F564             10                             MOV 64H,A
+0106 E560             11                             MOV A,60H
+                      12                             
+0108 3570             13                             ADDC A,70H
+                      14                             
+010A F563             15                             MOV 63H,A
+010C 536080           16                             ANL 60H,#80H
+010F E560             17                             MOV A,60H
+0111 23               18                             RL A
+0112 F566             19                             MOV 66H,A
+0114 537080           20                             ANL 70H,#80H
+0117 E570             21                             MOV A,70H
+0119 23               22                             RL A
+011A 3566             23                             ADDC A,66H
+011C 5401             24                             ANL A,#01H
+011E F562             25                             MOV 62H,A
+                      26                             
+0120 80FE             27                             HERE: SJMP HERE
+                      28                     END
+A51 MACRO ASSEMBLER  ADD2S                                                                08/02/2018 21:27:33 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   0120H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

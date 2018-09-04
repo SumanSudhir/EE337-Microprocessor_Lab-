@@ -1,0 +1,120 @@
+A51 MACRO ASSEMBLER  READBYTE                                                             08/17/2018 13:03:30 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\readbyte.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE readbyte.asm SET(SMALL) DEBUG PRINT(.\Listings\readbyte.lst) OBJECT(.\O
+                      bjects\readbyte.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 00H
+0000 020100            2     LJMP MAIN
+                       3     
+0050                   4     ORG 50H
+0050                   5     LOAD_A: 
+0050 7590FF            6             MOV P1,#0FFH            ;P1.0-3 AS INPUT AND MAKE LEDS HIGH
+0053 7464              7             MOV A,#100                      ;FOR A 5S DELAY, USER GIVES INPUT
+0055 1176              8             ACALL DELAY                     
+                       9     
+0057 C297             10             CLR P1.7
+0059 C296             11             CLR P1.6
+005B C295             12             CLR P1.5
+005D C294             13             CLR P1.4
+                      14     
+005F 7414             15             MOV A,#20                       ;DELAY OF 1S
+0061 1176             16             ACALL DELAY
+                      17             
+0063 E590             18             MOV A, P1                       ;READ VALUE ON SWITCHES 
+0065 22               19     RET     
+                      20     
+                      21     
+0066                  22     READNIBBLE:
+0066 1150             23             ACALL LOAD_A
+                      24             
+0068 F6               25             MOV @R0,A
+0069 C4               26             SWAP A
+006A F590             27             MOV P1, A                       ;DISPLAY VALUE ON LEDS
+                      28     
+                      29             
+006C 7464             30             MOV A,#100                      ;FOR A 5S DELAY
+006E 1176             31             ACALL DELAY     
+                      32             
+                      33             ;FOR VERIFICATION:
+0070 1150             34             ACALL LOAD_A
+0072 B40FF1           35             CJNE A,#0FH, READNIBBLE                 ;       
+0075 22               36     RET     
+                      37     
+                      38     
+0076                  39     DELAY:
+                      40     USING 0
+0076 C000             41             PUSH AR0
+0078 C001             42             PUSH AR1
+007A C002             43             PUSH AR2
+007C C0D0             44             PUSH PSW
+                      45     
+                      46     
+007E F8               47             MOV R0,A
+007F                  48             LOOP:
+007F 7AC8             49                     MOV R2,#200 
+0081                  50                     BACK1:
+0081 79FA             51                             MOV R1,#250 
+0083 D9FE             52                             BACK : DJNZ R1, BACK 
+0085 DAFA             53                             DJNZ R2, BACK1
+0087 D8F6             54                     DJNZ R0, LOOP
+                      55             
+0089 D0D0             56             POP PSW
+008B D002             57             POP AR2
+A51 MACRO ASSEMBLER  READBYTE                                                             08/17/2018 13:03:30 PAGE     2
+
+008D D001             58             POP AR1
+008F D000             59             POP AR0
+0091 22               60     RET
+                      61     
+                      62     
+0092                  63     PACKNIBBLE:
+0092 E54E             64             MOV A, 4EH
+0094 C4               65             SWAP A
+0095 254F             66             ADD A, 4FH
+0097 F550             67             MOV 50H, A
+0099 22               68     RET
+                      69     
+                      70     
+0100                  71     ORG 100H
+0100                  72     MAIN:
+0100 784E             73             MOV R0, #4EH
+0102 120066           74             LCALL READNIBBLE
+0105 784F             75             MOV R0, #4FH
+0107 120066           76             LCALL READNIBBLE
+010A 120092           77             LCALL PACKNIBBLE
+                      78             
+010D 80FE             79             HERE: SJMP HERE
+                      80     END
+A51 MACRO ASSEMBLER  READBYTE                                                             08/17/2018 13:03:30 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR0. . . . . . . .  D ADDR   0000H   A   
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR2. . . . . . . .  D ADDR   0002H   A   
+BACK . . . . . . .  C ADDR   0083H   A   
+BACK1. . . . . . .  C ADDR   0081H   A   
+DELAY. . . . . . .  C ADDR   0076H   A   
+HERE . . . . . . .  C ADDR   010DH   A   
+LOAD_A . . . . . .  C ADDR   0050H   A   
+LOOP . . . . . . .  C ADDR   007FH   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+PACKNIBBLE . . . .  C ADDR   0092H   A   
+PSW. . . . . . . .  D ADDR   00D0H   A   
+READNIBBLE . . . .  C ADDR   0066H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,3 @@
+".\Objects\Add2.obj" 
+TO ".\Objects\projecthw1" 
+PRINT(".\Listings\projecthw1.m51") RAMSIZE(256) 

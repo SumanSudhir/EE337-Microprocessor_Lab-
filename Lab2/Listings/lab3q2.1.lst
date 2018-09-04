@@ -1,0 +1,87 @@
+A51 MACRO ASSEMBLER  LAB3Q2_1                                                             08/13/2018 17:08:35 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\lab3q2.1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Lab3\lab3q2.1.asm SET(SMALL) DEBUG PRINT(.\Listings\lab3q2.1.lst) OBJEC
+                      T(.\Objects\lab3q2.1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0090                 1     LED EQU P1 
+0000                   2     ORG 00H
+0000 02010D            3     LJMP MAIN
+0100                   4     ORG 100H
+                       5             
+0100                   6     DELAY:  
+0100 AB50              7                     MOV R3,50H
+0102                   8             LOOP:   
+0102 7AC8              9                     MOV R2,#200
+0104                  10                     BACK1:
+0104 7CFF             11                     MOV R4,#0FFH
+0106                  12                     BACK:
+0106 DCFE             13                     DJNZ R4, BACK
+0108 DAFA             14                     DJNZ R2, BACK1
+010A DBF6             15                     DJNZ R3,LOOP
+010C 22               16             RET
+                      17     
+                      18     
+                      19     
+                      20     
+                      21     
+                      22     
+010D                  23     MAIN:
+010D E590             24                             MOV A,LED
+010F C4               25                             SWAP A
+0110 75F014           26                             MOV B,#20
+0113 A4               27                             MUL AB
+0114 F550             28                             MOV 50H,A
+0116 E4               29                             CLR A
+0117 D297             30                             SETB P1.7
+0119 D296             31                             SETB P1.6
+011B D295             32                             SETB P1.5
+011D C294             33                             CLR P1.4
+                      34                             
+011F                  35                             LOOP1:
+011F 120100           36                             LCALL DELAY
+0122 B295             37                             CPL P1.5      ;D/4
+0124 120100           38                             LCALL DELAY
+0127 B296             39                             CPL P1.6        ;D/2
+0129 B295             40                             CPL P1.5      ;D/2
+012B 120100           41                             LCALL DELAY
+012E B295             42                             CPL P1.5       ;3D/4
+0130 120100           43                             LCALL DELAY
+0133 B296             44                             CPL P1.6        ;D
+0135 B295             45                             CPL P1.5           ;D
+0137 B297             46                             CPL P1.7
+0139 120100           47                             LCALL DELAY
+013C 80E1             48                             SJMP LOOP1
+                      49                             
+013E 80FE             50                             HERE :SJMP HERE
+                      51     END
+                                     
+                                     
+A51 MACRO ASSEMBLER  LAB3Q2_1                                                             08/13/2018 17:08:35 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+BACK . . . . . . .  C ADDR   0106H   A   
+BACK1. . . . . . .  C ADDR   0104H   A   
+DELAY. . . . . . .  C ADDR   0100H   A   
+HERE . . . . . . .  C ADDR   013EH   A   
+LED. . . . . . . .  D ADDR   0090H   A   
+LOOP . . . . . . .  C ADDR   0102H   A   
+LOOP1. . . . . . .  C ADDR   011FH   A   
+MAIN . . . . . . .  C ADDR   010DH   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

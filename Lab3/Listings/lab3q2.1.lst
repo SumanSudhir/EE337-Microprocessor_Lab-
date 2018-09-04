@@ -1,0 +1,100 @@
+A51 MACRO ASSEMBLER  LAB3Q2_1                                                             08/15/2018 21:24:13 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\lab3q2.1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE lab3q2.1.asm SET(SMALL) DEBUG PRINT(.\Listings\lab3q2.1.lst) OBJECT(.\O
+                      bjects\lab3q2.1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0090                 1     LED EQU P1 
+0000                   2     ORG 00H
+                       3     
+0000 020111            4     LJMP MAIN
+0100                   5     ORG 100H
+                       6             
+0100                   7     DELAY:  
+0100 AD60              8                     MOV R5,60H
+0102 7B14              9                     MOV R3,#20
+0104                  10             LOOP1:
+0104                  11             LOOP:   
+0104 7AC8             12                     MOV R2,#200
+0106                  13                     BACK1:
+0106 7CFF             14                     MOV R4,#0FFH
+0108                  15                     BACK:
+0108 DCFE             16                     DJNZ R4, BACK
+010A DAFA             17                     DJNZ R2, BACK1
+010C DBF6             18                     DJNZ R3,LOOP
+010E DDF4             19                     DJNZ R5,LOOP1
+0110 22               20             RET
+                      21     
+0111                  22     MAIN:           
+0111 D290             23                             SETB P1.0
+0113 D291             24                             SETB P1.1
+0115 D292             25                             SETB P1.2
+0117 D293             26                             SETB P1.3
+                      27                             
+                      28                             
+0119 E590             29                             MOV A,P1
+011B C4               30                             SWAP A
+011C 540F             31                             ANL A,#0FH
+011E 75F004           32                             MOV B,#4
+0121 84               33                             DIV AB
+                      34     
+0122 F560             35                             MOV 60H,A
+                      36                                             
+0124 D297             37                             SETB P1.7
+0126 D296             38                             SETB P1.6
+0128 D295             39                             SETB P1.5
+012A C294             40                             CLR P1.4
+                      41                             
+                      42                             
+012C                  43                             LOOP2:
+012C 120100           44                             LCALL DELAY
+012F B295             45                             CPL P1.5      ;D/4
+                      46                             
+0131 120100           47                             LCALL DELAY
+0134 B295             48                             CPL P1.5                        
+0136 B296             49                             CPL P1.6 
+                      50                             
+0138 120100           51                             LCALL DELAY
+013B B295             52                             CPL P1.5       ;3D/4
+                      53                             
+013D 120100           54                             LCALL DELAY
+0140 B295             55                             CPL P1.5
+0142 B296             56                             CPL P1.6        ;D
+0144 B297             57                             CPL P1.7         ;D
+A51 MACRO ASSEMBLER  LAB3Q2_1                                                             08/15/2018 21:24:13 PAGE     2
+
+0146 80E4             58                             SJMP LOOP2
+                      59                             
+0148 80FE             60                             HERE :SJMP HERE
+                      61     END
+                                     
+                                     
+A51 MACRO ASSEMBLER  LAB3Q2_1                                                             08/15/2018 21:24:13 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+BACK . . . . . . .  C ADDR   0108H   A   
+BACK1. . . . . . .  C ADDR   0106H   A   
+DELAY. . . . . . .  C ADDR   0100H   A   
+HERE . . . . . . .  C ADDR   0148H   A   
+LED. . . . . . . .  D ADDR   0090H   A   
+LOOP . . . . . . .  C ADDR   0104H   A   
+LOOP1. . . . . . .  C ADDR   0104H   A   
+LOOP2. . . . . . .  C ADDR   012CH   A   
+MAIN . . . . . . .  C ADDR   0111H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

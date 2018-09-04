@@ -1,0 +1,51 @@
+A51 MACRO ASSEMBLER  LAB3Q2_2                                                             08/13/2018 17:17:39 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\lab3q2.2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Lab3\lab3q2.2.asm SET(SMALL) DEBUG PRINT(.\Listings\lab3q2.2.lst) OBJEC
+                      T(.\Objects\lab3q2.2.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0090                 1     LED EQU P1
+0000                   2     ORG 00H
+0000 020100            3     LJMP MAIN
+0100                   4     ORG 100H
+0100                   5     MAIN:
+                       6     
+0100 E590              7             MOV A,P1
+0102 5403              8             ANL A,#0011B
+0104 F550              9             MOV 50H,A
+                      10             
+0106 E590             11             MOV A,P1
+0108 540C             12             ANL A,#1100B
+010A F551             13             MOV 51H,A
+                      14             
+010C A850             15             MOV R0,50H
+010E E551             16             MOV A,51H
+0110 28               17             ADD A,R0
+                      18             
+0111 9296             19             MOV P1.6,C
+                      20             
+0113 C4               21             SWAP A
+0114 F590             22             MOV LED,A
+                      23             
+                      24     END
+A51 MACRO ASSEMBLER  LAB3Q2_2                                                             08/13/2018 17:17:39 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+LED. . . . . . . .  D ADDR   0090H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

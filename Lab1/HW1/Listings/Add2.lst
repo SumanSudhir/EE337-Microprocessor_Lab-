@@ -1,0 +1,42 @@
+A51 MACRO ASSEMBLER  ADD2                                                                 08/02/2018 20:50:11 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\Add2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Add2.asm SET(SMALL) DEBUG PRINT(.\Listings\Add2.lst) OBJECT(.\Objects\A
+                      dd2.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 0h
+0000 020100            2     ljmp main
+0100                   3     org 100h
+                       4                     
+0100                   5                     main : 
+0100 755050            6                             mov 50h,#80
+0103 756050            7                             mov 60h,#80
+                       8                             
+0106 E550              9                             mov A, 50h
+0108 2560             10                             add A, 60h
+010A F570             11                             mov 70h, A
+                      12     
+010C 9200             13                             mov 00h, C
+010E 852071           14                             mov 71h, 20h
+0111 80FE             15                             HERE: sjmp HERE
+                      16                     end
+A51 MACRO ASSEMBLER  ADD2                                                                 08/02/2018 20:50:11 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   0111H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

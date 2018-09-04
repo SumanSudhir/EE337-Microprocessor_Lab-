@@ -1,0 +1,81 @@
+A51 MACRO ASSEMBLER  LW1NEW                                                               08/13/2018 15:27:47 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\lw1new.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE lw1new.asm SET(SMALL) DEBUG PRINT(.\Listings\lw1new.lst) OBJECT(.\Objec
+                      ts\lw1new.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0090                 1     LED EQU P1
+0000                   2     ORG 00H
+0000 02011E            3     LJMP MAIN
+0100                   4     ORG 100H
+0100                   5     DELAY:  
+0100 7B14              6                     MOV R3,#20
+0102                   7             LOOP:   
+                       8             
+0102 7AC8              9                     MOV R2,#200
+0104                  10                     BACK1:
+0104 7CFF             11                     MOV R4,#0FFH
+0106                  12                     BACK:
+0106 DCFE             13                     DJNZ R4, BACK
+0108 DAFA             14                     DJNZ R2, BACK1
+010A DBF6             15                     DJNZ R3,LOOP
+010C 22               16     RET
+                      17     
+010D                  18     DISPLAY:
+010D A850             19                     MOV R0,50H
+010F 7951             20                     MOV R1,#51H
+0111                  21             LOOP2:
+0111 E7               22                     MOV A,@R1   
+0112 540F             23                     ANL A,#0FH
+0114 C4               24                     SWAP A
+0115 F590             25                     MOV LED,A
+0117 120100           26                     LCALL DELAY
+011A 09               27                     INC R1
+011B D8F4             28                     DJNZ R0,LOOP2
+011D 22               29     RET
+                      30     
+011E                  31     MAIN:
+011E A850             32             MOV R0,50H
+0120 7951             33             MOV R1,#51H
+0122 755006           34             MOV 50H,#6
+0125 7551AA           35             MOV 51H,#10101010B
+0128 755255           36             MOV 52H,#01010101B
+012B 7553AA           37             MOV 53H,#10101010B
+012E 755455           38             MOV 54H,#01010101B
+0131 7555AA           39             MOV 55H,#10101010B
+0134 755655           40             MOV 56H,#01010101B
+0137 12010D           41             LCALL DISPLAY
+                      42             
+                      43     END             
+                                             
+                                             
+                                 
+                                
+                             
+A51 MACRO ASSEMBLER  LW1NEW                                                               08/13/2018 15:27:47 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+BACK . . . . . . .  C ADDR   0106H   A   
+BACK1. . . . . . .  C ADDR   0104H   A   
+DELAY. . . . . . .  C ADDR   0100H   A   
+DISPLAY. . . . . .  C ADDR   010DH   A   
+LED. . . . . . . .  D ADDR   0090H   A   
+LOOP . . . . . . .  C ADDR   0102H   A   
+LOOP2. . . . . . .  C ADDR   0111H   A   
+MAIN . . . . . . .  C ADDR   011EH   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,68 @@
+A51 MACRO ASSEMBLER  SUBTRACTION2S                                                        08/02/2018 21:01:55 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\subtraction2s.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE subtraction2s.asm SET(SMALL) DEBUG PRINT(.\Listings\subtraction2s.lst) 
+                      OBJECT(.\Objects\subtraction2s.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+                       4                     
+0100                   5                     MAIN : 
+                       6                         
+0100 E571              7                             MOV A,71H
+0102 F4                8                             CPL A
+0103 2401              9                             ADD A,#1
+0105 F571             10                             MOV 71H,A
+                      11                             
+0107 E4               12                             CLR A
+                      13                             
+0108 E570             14                             MOV A,70H
+010A F4               15                             CPL A
+010B 3400             16                             ADDC A,#0
+                      17                             
+010D F570             18                             MOV 70H,A
+                      19                             
+                      20                             
+010F E561             21                             MOV A,61H       
+0111 2571             22                             ADD A,71H
+                      23                             
+0113 F564             24                             MOV 64H,A
+0115 E560             25                             MOV A,60H
+                      26                             
+0117 3570             27                             ADDC A,70H
+                      28                             
+0119 F563             29                             MOV 63H,A
+011B 536080           30                             ANL 60H,#80H
+011E E560             31                             MOV A,60H
+0120 23               32                             RL A
+0121 F566             33                             MOV 66H,A
+0123 537080           34                             ANL 70H,#80H
+0126 E570             35                             MOV A,70H
+0128 23               36                             RL A
+0129 3566             37                             ADDC A,66H
+012B 5401             38                             ANL A,#01H
+012D F562             39                             MOV 62H,A
+                      40                             
+012F 80FE             41                             HERE: SJMP HERE
+                      42                     END
+A51 MACRO ASSEMBLER  SUBTRACTION2S                                                        08/02/2018 21:01:55 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   012FH   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
