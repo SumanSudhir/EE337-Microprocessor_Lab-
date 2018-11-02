@@ -1,0 +1,276 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        10/30/2018  16:07:40  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\labwork3_a.obj TO .\Objects\project9 PRINT (.\Listings\project9.m51) RAMSIZE (256)
+>> 
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\labwork3_a.obj (LABWORK3_A)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?IMUL)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\project9 (LABWORK3_A)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+                    0008H     0018H                  *** GAP ***
+            BIT     0020H.0   0000H.4   UNIT         ?BI?LABWORK3_A
+                    0020H.4   0000H.4                *** GAP ***
+            DATA    0021H     0054H     UNIT         ?DT?LABWORK3_A
+            IDATA   0075H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     000DH                  *** GAP ***
+            CODE    001BH     0003H     ABSOLUTE     
+                    001EH     002DH                  *** GAP ***
+            CODE    004BH     0003H     ABSOLUTE     
+                    004EH     07B2H                  *** GAP ***
+            CODE    0800H     00B4H     UNIT         ?PR?TIMER0_ISR?LABWORK3_A
+            CODE    08B4H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0940H     007BH     UNIT         ?C_INITSEG
+            CODE    09BBH     004FH     UNIT         ?PR?TIMER1_ISR?LABWORK3_A
+            CODE    0A0AH     0024H     UNIT         ?PR?MAIN?LABWORK3_A
+            CODE    0A2EH     001CH     UNIT         ?PR?SPI_INIT?LABWORK3_A
+            CODE    0A4AH     001CH     UNIT         ?PR?IT_SPI?LABWORK3_A
+            CODE    0A66H     0018H     UNIT         ?PR?TIMER_INIT?LABWORK3_A
+            CODE    0A7EH     0012H     UNIT         ?C?LIB_CODE
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\project9 (LABWORK3_A)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?LABWORK3_A
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/30/2018  16:07:40  PAGE 2
+
+
+  +--> ?C_INITSEG
+
+?PR?MAIN?LABWORK3_A
+  +--> ?PR?SPI_INIT?LABWORK3_A
+  +--> ?PR?TIMER_INIT?LABWORK3_A
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\project9 (LABWORK3_A)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        LABWORK3_A
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0021H         PUBLIC        serial_data
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  C:0800H         PUBLIC        TIMER0_ISR
+  D:00B0H         PUBLIC        P3
+  C:09BBH         PUBLIC        TIMER1_ISR
+  D:00C0H         PUBLIC        P4
+  D:00C3H         PUBLIC        SPCON
+  B:00A8H.7       PUBLIC        EA
+  D:0022H         PUBLIC        tempadcVal
+  D:00C4H         PUBLIC        SPSTA
+  D:00A8H         PUBLIC        IEN0
+  D:00B1H         PUBLIC        IEN1
+  D:0026H         PUBLIC        try0
+  D:00B8H         PUBLIC        IPL0
+  B:00B0H.5       PUBLIC        FS
+  B:00B0H.7       PUBLIC        P3_7
+  B:0020H.0       PUBLIC        transmit_completed
+  D:002AH         PUBLIC        high
+  D:00D8H         PUBLIC        CCON
+  C:0A0AH         PUBLIC        main
+  D:002BH         PUBLIC        voltage2
+  B:0020H.1       PUBLIC        offset_null
+  D:002DH         PUBLIC        adcValue
+  C:0A4AH         PUBLIC        it_SPI
+  D:002FH         PUBLIC        count
+  D:0030H         PUBLIC        data_save_high
+  D:0098H         PUBLIC        SCON
+  B:0020H.2       PUBLIC        wave
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:0031H         PUBLIC        temp
+  D:0033H         PUBLIC        temp_high
+  C:0A66H         PUBLIC        timer_init
+  D:0037H         PUBLIC        test
+  B:00A8H.1       PUBLIC        ET0
+  B:00A8H.3       PUBLIC        ET1
+  B:00B0H.4       PUBLIC        CS_BAR
+  D:008CH         PUBLIC        TH0
+  D:008DH         PUBLIC        TH1
+  D:0057H         PUBLIC        adcVal
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/30/2018  16:07:40  PAGE 3
+
+
+  D:008AH         PUBLIC        TL0
+  D:008BH         PUBLIC        TL1
+  D:005BH         PUBLIC        low
+  D:005CH         PUBLIC        sum
+  B:0088H.4       PUBLIC        TR0
+  D:00F8H         PUBLIC        UEPINT
+  B:0088H.6       PUBLIC        TR1
+  D:0060H         PUBLIC        initVal
+  D:0062H         PUBLIC        LSB
+  D:0063H         PUBLIC        data_save_low
+  D:0064H         PUBLIC        MSB
+  C:0A2EH         PUBLIC        SPI_Init
+  D:0065H         PUBLIC        avgVal
+  D:00C8H         PUBLIC        T2CON
+  D:0067H         PUBLIC        i
+  B:0020H.3       PUBLIC        roundoff
+  D:0068H         PUBLIC        m
+  D:006AH         PUBLIC        temp_low
+  D:006EH         PUBLIC        fweight
+  D:0072H         PUBLIC        voltage
+  D:0074H         PUBLIC        x
+  D:00C5H         PUBLIC        SPDAT
+  -------         PROC          MAIN
+  C:0A0AH         LINE#         44
+  C:0A0AH         LINE#         45
+  C:0A0AH         LINE#         46
+  C:0A0CH         LINE#         47
+  C:0A0EH         LINE#         48
+  C:0A11H         LINE#         49
+  C:0A14H         LINE#         50
+  C:0A14H         LINE#         51
+  C:0A14H         LINE#         52
+  C:0A16H         LINE#         53
+  C:0A18H         LINE#         55
+  C:0A1BH         LINE#         56
+  C:0A1EH         LINE#         57
+  C:0A20H         LINE#         59
+  C:0A23H         LINE#         60
+  C:0A26H         LINE#         61
+  C:0A28H         LINE#         63
+  C:0A2AH         LINE#         64
+  C:0A2CH         LINE#         66
+  -------         ENDPROC       MAIN
+  -------         PROC          TIMER_INIT
+  C:0A66H         LINE#         71
+  C:0A66H         LINE#         72
+  C:0A66H         LINE#         73
+  C:0A69H         LINE#         74
+  C:0A6CH         LINE#         75
+  C:0A6FH         LINE#         77
+  C:0A72H         LINE#         78
+  C:0A75H         LINE#         80
+  C:0A77H         LINE#         81
+  C:0A79H         LINE#         82
+  C:0A7BH         LINE#         83
+  C:0A7DH         LINE#         86
+  -------         ENDPROC       TIMER_INIT
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/30/2018  16:07:40  PAGE 4
+
+
+  -------         PROC          TIMER1_ISR
+  C:09BBH         LINE#         89
+  C:09CEH         LINE#         92
+  C:09D0H         LINE#         93
+  C:09D3H         LINE#         94
+  C:09D6H         LINE#         95
+  C:09D8H         LINE#         96
+  C:09E9H         LINE#         98
+  C:09F4H         LINE#         99
+  C:09F7H         LINE#         100
+  C:09F9H         LINE#         102
+  -------         ENDPROC       TIMER1_ISR
+  -------         PROC          TIMER0_ISR
+  C:0800H         LINE#         104
+  C:0813H         LINE#         107
+  C:0815H         LINE#         108
+  C:0818H         LINE#         109
+  C:081BH         LINE#         110
+  C:0823H         LINE#         111
+  C:0825H         LINE#         112
+  C:0829H         LINE#         113
+  C:0829H         LINE#         114
+  C:082EH         LINE#         115
+  C:082EH         LINE#         116
+  C:0830H         LINE#         117
+  C:0832H         LINE#         118
+  C:0834H         LINE#         120
+  C:0834H         LINE#         121
+  C:0836H         LINE#         122
+  C:083EH         LINE#         123
+  C:0846H         LINE#         124
+  C:084AH         LINE#         125
+  C:084DH         LINE#         126
+  C:084FH         LINE#         127
+  C:084FH         LINE#         128
+  C:084FH         LINE#         130
+  C:085AH         LINE#         131
+  C:0869H         LINE#         132
+  C:0869H         LINE#         135
+  C:087FH         LINE#         136
+  C:0895H         LINE#         137
+  C:0895H         LINE#         140
+  C:089DH         LINE#         141
+  C:08A1H         LINE#         142
+  C:08A1H         LINE#         144
+  C:08A3H         LINE#         145
+  -------         ENDPROC       TIMER0_ISR
+  -------         PROC          SPI_INIT
+  C:0A2EH         LINE#         147
+  C:0A2EH         LINE#         148
+  C:0A2EH         LINE#         149
+  C:0A30H         LINE#         150
+  C:0A32H         LINE#         151
+  C:0A35H         LINE#         152
+  C:0A38H         LINE#         153
+  C:0A3BH         LINE#         154
+  C:0A3EH         LINE#         155
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/30/2018  16:07:40  PAGE 5
+
+
+  C:0A41H         LINE#         156
+  C:0A44H         LINE#         157
+  C:0A46H         LINE#         158
+  C:0A49H         LINE#         159
+  -------         ENDPROC       SPI_INIT
+  -------         PROC          IT_SPI
+  C:0A4AH         LINE#         161
+  C:0A53H         LINE#         163
+  C:0A5AH         LINE#         164
+  C:0A5AH         LINE#         165
+  C:0A5AH         LINE#         166
+  C:0A5DH         LINE#         167
+  C:0A5FH         LINE#         168
+  C:0A5FH         LINE#         170
+  C:0A5FH         LINE#         172
+  C:0A5FH         LINE#         174
+  C:0A5FH         LINE#         175
+  C:0A5FH         LINE#         176
+  C:0A5FH         LINE#         177
+  -------         ENDPROC       IT_SPI
+  -------         ENDMOD        LABWORK3_A
+
+  -------         MODULE        ?C?IMUL
+  C:0A7EH         PUBLIC        ?C?IMUL
+  -------         ENDMOD        ?C?IMUL
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01FAH BYTE (24%) *
+******************************************************************************
+
+Program Size: data=93.4 xdata=0 code=668
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

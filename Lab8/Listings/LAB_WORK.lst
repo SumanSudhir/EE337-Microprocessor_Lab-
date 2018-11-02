@@ -1,0 +1,82 @@
+C51 COMPILER V9.54   LAB_WORK                                                              10/08/2018 15:20:06 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE LAB_WORK
+OBJECT MODULE PLACED IN .\Objects\LAB_WORK.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE LAB_WORK.C OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -LAB_WORK.lst) TABS(2) OBJECT(.\Objects\LAB_WORK.obj)
+
+line level    source
+
+   1          #include <AT89C5131.h> // All SFR declarations for AT89C5131
+   2          #include<lcd_test.c>
+   3          #include<Keypad_Updated.c>
+   4          
+   5          sbit LED = P1^4; //assigning label to P1^4 as "LED"
+   6          sbit PARITY = PSW^0;
+   7          
+   8          //void delay_ms(int delay);
+   9          
+  10          void ISR_Serial(void) interrupt 4 {
+  11   1        LED = ~LED;
+  12   1        TI = 0;               //transfer interrupt
+  13   1        SBUF = 0x41;           //
+  14   1      }
+  15          
+  16          void init_serial() {
+  17   1        TMOD = 0x20;    //MODE 2
+  18   1        TH1 = 0xCC;    //BAUD RATE 1200 ====204
+  19   1        
+  20   1        SCON = SCON||0xC0;
+  21   1                        // setting of interrupts
+  22   1        
+  23   1        ES = 1;    //SERIAL PORT interrupt
+  24   1        ET1 = 0;       //SET TO ENABLE TIMER Overflow 
+  25   1        ACC = 0x41;
+  26   1        // doing parity check
+  27   1        
+  28   1        ACC += 1;
+  29   1        ACC -= 1;
+  30   1        TB8 = PARITY;
+  31   1        EA = 1;      //enable interrupt
+  32   1        SBUF = 0x41;
+  33   1                          // starting timer
+  34   1        TR1 = 1;          //setting timer1
+  35   1      }
+  36          
+  37          void main (void) {
+  38   1        LED = 0;
+  39   1        init_serial();
+  40   1        while(1);
+  41   1        //delay_ms(5);
+  42   1      }
+  43          
+  44          
+  45          /*
+  46          void delay_ms(int delay)
+  47          {
+  48            int d=0;
+  49            while(delay>0)
+  50            {
+  51              for(d=0;d<382;d++);
+  52              delay--;
+  53            }
+  54          }
+C51 COMPILER V9.54   LAB_WORK                                                              10/08/2018 15:20:06 PAGE 2   
+
+  55          
+  56          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    491    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

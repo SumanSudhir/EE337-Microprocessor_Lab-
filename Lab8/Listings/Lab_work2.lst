@@ -1,0 +1,136 @@
+C51 COMPILER V9.54   LAB_WORK2                                                             10/08/2018 15:53:42 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE LAB_WORK2
+OBJECT MODULE PLACED IN .\Objects\Lab_work2.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Lab_work2.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\Lab_work2.lst) TABS(2) OBJECT(.\Objects\Lab_work2.obj)
+
+line level    source
+
+   1          #include "at89c5131.h"
+   2          #include "stdio.h"
+   3          #include "lcd_test.c"
+   4          
+   5          unsigned char z;
+   6          void Ext_Interrpt (void) interrupt 7
+   7          {
+   8   1        ACC = P1
+   9   1        delay_in_ms(100)
+*** ERROR C141 IN LINE 9 OF Lab_work2.c: syntax error near 'delay_in_ms'
+  10   1        if(ACC!=0x0F0)
+  11   1          z = read_keypad()
+  12   1      }
+  13          
+  14          
+  15          void keypad_init(void)
+  16          {
+  17   1            P1=0xF0;
+  18   1       //     P1|=0x0F;
+  19   1            KBE=0xF0;  //MOV 0x9D,#0xF0  ;KBE
+  20   1            KBLS=0x0F;   //MOV 0x9C,#0x0F  ;KBLS
+  21   1            KBF=00; //0x9E,#00    ;KBF
+  22   1              while(KBF);
+  23   1            IEN1=0x01;   //MOV 0xB1,#0x01  ;IE1
+  24   1            EA=1;
+  25   1      } 
+  26          void delay_in_ms(unsigned int time)
+  27          {
+  28   1        int i,j;
+  29   1        for(i=0;i<time;i++)
+  30   1        {
+  31   2          for(j=0;j<382;j++);
+  32   2        }
+  33   1      }
+  34          unsigned char read_keypad(void)
+  35          {
+  36   1      
+  37   1         unsigned char key=0,row=0,col=0,no=0,no_1=0,temp=0;
+  38   1         unsigned int i=0;
+  39   1         unsigned char final_val=0;
+  40   1        
+  41   1         P1= 0xF0;
+  42   1        
+  43   1         temp=((~P1) & 0xF0)>>4; //row
+  44   1         i=0;
+  45   1         while(i<=3)
+  46   1         {
+  47   2            if(((temp>>i)&0x01)==1)
+  48   2            {
+  49   3              row=i;
+  50   3              break;
+  51   3            }
+  52   2            i++;      
+  53   2         }
+C51 COMPILER V9.54   LAB_WORK2                                                             10/08/2018 15:53:42 PAGE 2   
+
+  54   1         P1=0x0F;
+  55   1         temp=((~P1) & 0x0F); //col 
+  56   1         i=0;
+  57   1         while(i<=3)
+  58   1         {
+  59   2            if(((temp>>i) & 0x01)==1)
+  60   2            {
+  61   3              col=i;      
+  62   3              break;
+  63   3            }
+  64   2            i++;      
+  65   2         }
+  66   1         //col=i;
+  67   1         no=(4*row)+col;
+  68   1         //delay_in_ms(15);
+  69   1         P1=0xF0;
+  70   1         temp=((~P1) & 0xF0)>>4; //row 
+  71   1         i=0;
+  72   1         while(i<=3)
+  73   1         {
+  74   2            if(((temp>>i) & 0x01)==1)
+  75   2            {
+  76   3              row=i;  
+  77   3              break;
+  78   3            }
+  79   2            i++;      
+  80   2         }
+  81   1         P1=0x0F;
+  82   1         temp=((~P1)&0x0F);
+  83   1         i=0;
+  84   1         while(i<=3)
+  85   1         {
+  86   2            if(((temp>>i) & 0x01)==1)
+  87   2            {
+  88   3              col=i;  
+  89   3              break;
+  90   3            }
+  91   2            i++;      
+  92   2         }   
+  93   1         //col=i;
+  94   1         no_1=4*row+col;
+  95   1         if(no==no_1)
+  96   1         {
+  97   2            final_val=no;
+  98   2         }
+  99   1         final_val += 48;
+ 100   1         
+ 101   1         if(final_val > 57 && final_val < 65)
+ 102   1          final_val += 7;
+ 103   1         
+ 104   1         P1=0xF0;
+ 105   1         
+ 106   1         while(P1!= 0xF0)
+ 107   1             P1= 0xF0;
+ 108   1         
+ 109   1          KBF=0x00;
+ 110   1          while(KBF); //Wait till flag gets cleared
+ 111   1           
+ 112   1         return final_val;
+ 113   1      } 
+ 114          void main(void){
+ 115   1        port_init();
+C51 COMPILER V9.54   LAB_WORK2                                                             10/08/2018 15:53:42 PAGE 3   
+
+ 116   1        lcd_init();
+ 117   1        lcd_cmd(0x80);
+ 118   1        lcd_char(z);
+ 119   1      }
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)

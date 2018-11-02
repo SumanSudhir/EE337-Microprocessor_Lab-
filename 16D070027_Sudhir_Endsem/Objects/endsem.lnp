@@ -1,0 +1,3 @@
+".\Objects\part2.obj" 
+TO ".\Objects\endsem" 
+PRINT(".\Listings\endsem.m51") RAMSIZE(256) 

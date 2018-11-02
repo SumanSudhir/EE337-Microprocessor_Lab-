@@ -1,0 +1,76 @@
+A51 MACRO ASSEMBLER  QUESTION2                                                            10/30/2018 14:01:14 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\QUESTION2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE QUESTION2.ASM SET(SMALL) DEBUG PRINT(.\Listings\QUESTION2.lst) OBJECT(.
+                      \Objects\QUESTION2.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 00H
+0000 020200            2     LJMP MAIN
+                       3     
+0003                   4     ORG 003H                                                        ;ISR FOR TIMER 0
+0003 020100            5     LJMP ISR1
+                       6     
+000B                   7     ORG 00BH
+000B 02010F            8     LJMP TIMER
+                       9     
+0100                  10     ORG 100H
+                      11             
+0100                  12     ISR1:
+0100 A98C             13             MOV R1,TH0
+0102 AA8A             14             MOV R2,TL0
+0104 EB               15             MOV A,R3
+0105 FC               16             MOV R4,A
+0106 7B00             17             MOV R3,#0
+0108 758C00           18             MOV TH0,#00H
+010B 758A00           19             MOV TL0,#00H
+                      20             
+010E 32               21     RETI
+                      22     
+010F                  23     TIMER:
+010F 0B               24             INC R3
+0110 32               25     RETI
+                      26     
+0200                  27     ORG 200H
+                      28             
+0200                  29     MAIN:
+0200 758909           30             MOV TMOD,#09H              
+0203 75A883           31             MOV IE,#83H                ;timer0 and external0 interrupt
+0206 758801           32             MOV TCON,#01H             ;interrupt by falling edge
+                      33             
+0209 758C00           34             MOV TH0,#00H
+020C 758A00           35             MOV TL0,#00H
+020F 7B00             36             MOV R3,#0
+0211 C28D             37             CLR TF0
+0213 D28C             38             SETB TR0;
+0215 80FE             39             HERE:SJMP HERE
+                      40             
+                      41     END     
+A51 MACRO ASSEMBLER  QUESTION2                                                            10/30/2018 14:01:14 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   0215H   A   
+IE . . . . . . . .  D ADDR   00A8H   A   
+ISR1 . . . . . . .  C ADDR   0100H   A   
+MAIN . . . . . . .  C ADDR   0200H   A   
+TCON . . . . . . .  D ADDR   0088H   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TIMER. . . . . . .  C ADDR   010FH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

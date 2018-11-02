@@ -1,0 +1,17 @@
+
+
+------- keypad configuration------------
+mov p1,#0f0h		;LSB as row, MSB as column									
+setb IE.7
+
+mov a,0b1h		;IEN1, interrupt enable register
+ORL a,#01		;changing only the required bit, without changing the other bits
+mov 0b1h,a			
+
+mov 9cH,#0Fh		;KBLS (level selector), LSB as row, MSB as column
+mov 9dH,#0f0h		;KBE (Keyboard enable) LSB as interrupt, MSB as I/O
+
+
+For more information about KBE, KBLS, KBF read the datasheet from page no. 84
+----------------------------------------
+

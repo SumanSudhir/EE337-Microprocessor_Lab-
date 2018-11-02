@@ -1,0 +1,483 @@
+A51 MACRO ASSEMBLER  LABWORK2                                                             09/24/2018 14:12:07 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\labwork2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE labwork2.asm SET(SMALL) DEBUG PRINT(.\Listings\labwork2.lst) OBJECT(.\O
+                      bjects\labwork2.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; THIS SUBROUTINE WRITES CHARACTERS ON THE LCD
+  00A0                 2     LCD_DATA EQU P2    ;LCD DATA PORT
+  0080                 3     LCD_RS   EQU P0.0  ;LCD REGISTER SELECT
+  0081                 4     LCD_RW   EQU P0.1  ;LCD READ/WRITE
+  0082                 5     LCD_EN   EQU P0.2  ;LCD ENABLE
+                       6     
+0000                   7     ORG 0000H
+0000 0203B7            8     LJMP MAIN
+                       9     
+003B                  10     ORG 003BH
+003B 02039C           11             LJMP ISR
+                      12             
+0200                  13     ORG 200H
+0200                  14     START:
+0200 75A000           15           MOV P2,#00H
+0203 51D7             16           ACALL DELAY
+0205 51D7             17               ACALL DELAY
+0207 515B             18               ACALL LCD_INIT      ;INITIALISE LCD
+                      19             
+0209 51D7             20               ACALL DELAY
+020B 51D7             21               ACALL DELAY
+020D 51D7             22               ACALL DELAY
+                      23             
+020F 7480             24               MOV A,#080H            
+0211 5198             25               ACALL LCD_COMMAND
+0213 51D7             26               ACALL DELAY
+0215 7850             27               MOV   R0,#50H
+0217 51B8             28               ACALL LCD_SENDSTRING_FROM_RAM
+0219 1202E8           29               LCALL DELAY2
+021C 1202E8           30               LCALL DELAY2
+021F 1202E8           31               LCALL DELAY2
+0222 1202E8           32               LCALL DELAY2
+0225 1202E8           33               LCALL DELAY2
+0228 1202E8           34               LCALL DELAY2
+022B 1202E8           35               LCALL DELAY2
+022E 1202E8           36               LCALL DELAY2
+0231 1202E8           37               LCALL DELAY2
+0234 1202E8           38               LCALL DELAY2
+0237 22               39     RET             
+                      40     
+                      41     
+0238                  42     START2:
+                      43           USING 0 
+0238 C007             44                       PUSH AR7
+023A 75A000           45               MOV P2,#00H
+                      46               
+                      47          ; MOV P1,#00H
+                      48               ;INITIAL DELAY FOR LCD POWER UP
+                      49     
+                      50             ;HERE1:SETB P1.0
+023D 51D7             51               ACALL DELAY
+                      52             ;CLR P1.0
+023F 51D7             53               ACALL DELAY
+                      54             ;SJMP HERE1
+                      55     
+0241 E8               56           MOV A,R0
+0242 9460             57               SUBB A,#60H
+A51 MACRO ASSEMBLER  LABWORK2                                                             09/24/2018 14:12:07 PAGE     2
+
+0244 2480             58               ADD A,#80H
+0246 FF               59               MOV R7,A
+0247 515B             60               ACALL LCD_INIT      ;INITIALISE LCD
+                      61             
+0249 51D7             62               ACALL DELAY
+024B 51D7             63               ACALL DELAY
+024D 51D7             64               ACALL DELAY
+                      65              
+                      66     
+024F EF               67               MOV A,R7        ;PUT CURSOR ON SECOND ROW,3 COLUMN
+0250 5198             68               ACALL LCD_COMMAND
+0252 51D7             69               ACALL DELAY
+0254 7860             70               MOV   R0,#60H
+0256 51C6             71               ACALL LCD_SENDSTRING_FROM_RAM2
+0258 D007             72     POP AR7
+025A 22               73             RET                      
+                      74     
+                      75     ;------------------------LCD INITIALISATION ROUTINE----------------------------------------
+                             ------------
+025B                  76     LCD_INIT:
+025B 75A038           77              MOV   LCD_DATA,#38H  ;FUNCTION SET: 2 LINE, 8-BIT, 5X7 DOTS
+025E C280             78              CLR   LCD_RS         ;SELECTED COMMAND REGISTER
+0260 C281             79              CLR   LCD_RW         ;WE ARE WRITING IN INSTRUCTION REGISTER
+0262 D282             80              SETB  LCD_EN         ;ENABLE H->L
+0264 51D7             81                      ACALL DELAY
+0266 C282             82              CLR   LCD_EN
+0268 51D7             83                  ACALL DELAY
+                      84     
+026A 75A00C           85              MOV   LCD_DATA,#0CH  ;DISPLAY ON, CURSON OFF
+026D C280             86              CLR   LCD_RS         ;SELECTED INSTRUCTION REGISTER
+026F C281             87              CLR   LCD_RW         ;WE ARE WRITING IN INSTRUCTION REGISTER
+0271 D282             88              SETB  LCD_EN         ;ENABLE H->L
+0273 51D7             89                      ACALL DELAY
+0275 C282             90              CLR   LCD_EN
+                      91              
+0277 51D7             92                      ACALL DELAY
+0279 75A001           93              MOV   LCD_DATA,#01H  ;CLEAR LCD
+027C C280             94              CLR   LCD_RS         ;SELECTED COMMAND REGISTER
+027E C281             95              CLR   LCD_RW         ;WE ARE WRITING IN INSTRUCTION REGISTER
+0280 D282             96              SETB  LCD_EN         ;ENABLE H->L
+0282 51D7             97                      ACALL DELAY
+0284 C282             98              CLR   LCD_EN
+                      99              
+0286 51D7            100                      ACALL DELAY
+                     101     
+0288 75A006          102              MOV   LCD_DATA,#06H  ;ENTRY MODE, AUTO INCREMENT WITH NO SHIFT
+028B C280            103              CLR   LCD_RS         ;SELECTED COMMAND REGISTER
+028D C281            104              CLR   LCD_RW         ;WE ARE WRITING IN INSTRUCTION REGISTER
+028F D282            105              SETB  LCD_EN         ;ENABLE H->L
+0291 51D7            106                      ACALL DELAY
+0293 C282            107              CLR   LCD_EN
+                     108     
+0295 51D7            109                      ACALL DELAY
+                     110              
+0297 22              111              RET                  ;RETURN FROM ROUTINE
+                     112     
+                     113     ;-----------------------COMMAND SENDING ROUTINE-------------------------------------
+0298                 114      LCD_COMMAND:
+0298 F5A0            115              MOV   LCD_DATA,A     ;MOVE THE COMMAND TO LCD PORT
+029A C280            116              CLR   LCD_RS         ;SELECTED COMMAND REGISTER
+029C C281            117              CLR   LCD_RW         ;WE ARE WRITING IN INSTRUCTION REGISTER
+029E D282            118              SETB  LCD_EN         ;ENABLE H->L
+02A0 51D7            119                      ACALL DELAY
+02A2 C282            120              CLR   LCD_EN
+02A4 51D7            121                      ACALL DELAY
+                     122         
+A51 MACRO ASSEMBLER  LABWORK2                                                             09/24/2018 14:12:07 PAGE     3
+
+02A6 22              123              RET  
+                     124     ;-----------------------DATA SENDING ROUTINE-------------------------------------          
+                                       
+02A7                 125      LCD_SENDDATA:
+02A7 F5A0            126              MOV   LCD_DATA,A     ;MOVE THE COMMAND TO LCD PORT
+02A9 D280            127              SETB  LCD_RS         ;SELECTED DATA REGISTER
+02AB C281            128              CLR   LCD_RW         ;WE ARE WRITING
+02AD D282            129              SETB  LCD_EN         ;ENABLE H->L
+02AF 51D7            130                      ACALL DELAY
+02B1 C282            131              CLR   LCD_EN
+02B3 51D7            132              ACALL DELAY
+02B5 51D7            133                      ACALL DELAY
+02B7 22              134              RET                  ;RETURN FROM BUSY ROUTINE
+                     135     
+                     136     
+                     137     ;------------------------------------------------------------------------------------------
+                             ----
+02B8                 138     LCD_SENDSTRING_FROM_RAM:
+02B8 C0E0            139     PUSH 0E0H
+02BA                 140             LCD_SENDSTRING_FROM_RAM_LOOP:
+02BA E4              141                      CLR   A                 ;CLEAR ACCUMULATOR FOR ANY PREVIOUS DATA
+02BB E6              142                      MOV  A,@R0         ;LOAD THE FIRST CHARACTER IN ACCUMULATOR
+02BC 6005            143                      JZ    EXIT2              ;GO TO EXIT IF ZERO
+02BE 51A7            144                      ACALL LCD_SENDDATA             ;SEND FIRST CHAR
+                     145                             ; LCALL DELAY2
+02C0 08              146                      INC   R0              ;INCREMENT DATA POINTER
+02C1 80F7            147                      SJMP  LCD_SENDSTRING_FROM_RAM_LOOP    ;JUMP BACK TO SEND THE NEXT CHARACTE
+                             R
+02C3 D0E0            148     EXIT2:    POP 0E0H
+02C5 22              149              RET                     ;END OF ROUTINE
+                     150     ;---------------------------------------------------------------------------
+02C6                 151     LCD_SENDSTRING_FROM_RAM2:
+02C6 C0E0            152     PUSH 0E0H
+02C8                 153             LCD_SENDSTRING_FROM_RAM_LOOP2:
+02C8 E4              154                      CLR   A                 ;CLEAR ACCUMULATOR FOR ANY PREVIOUS DATA
+02C9 E6              155                      MOV  A,@R0         ;LOAD THE FIRST CHARACTER IN ACCUMULATOR
+02CA 6008            156                      JZ    EXIT2_2              ;GO TO EXIT IF ZERO
+02CC 51A7            157                      ACALL LCD_SENDDATA             ;SEND FIRST CHAR
+02CE 1202E8          158                              LCALL DELAY2
+02D1 08              159                      INC   R0              ;INCREMENT DATA POINTER
+02D2 80F4            160                      SJMP  LCD_SENDSTRING_FROM_RAM_LOOP2    ;JUMP BACK TO SEND THE NEXT CHARACT
+                             ER
+02D4 D0E0            161     EXIT2_2:    POP 0E0H
+02D6 22              162              RET                     ;END OF ROUTINE                 
+                     163     
+                     164     ;----------------------DELAY ROUTINE-----------------------------------------------------
+02D7 C000            165     DELAY:   PUSH 0
+02D9 C001            166              PUSH 1
+02DB 7801            167              MOV R0,#1
+02DD 79FF            168     LOOP2:   MOV R1,#255
+02DF D9FE            169              LOOP1:  DJNZ R1, LOOP1
+02E1 D8FA            170              DJNZ R0, LOOP2
+02E3 D001            171              POP 1
+02E5 D000            172              POP 0 
+02E7 22              173              RET
+                     174     ;-----------------------------------------------------------------
+02E8 C000            175     DELAY2:  PUSH 0
+02EA C001            176              PUSH 1
+02EC C002            177              PUSH 2
+02EE 7A0A            178              MOV R2,#10
+02F0 7832            179          LOOP5:    MOV R0,#50
+02F2 79C8            180     LOOP4:   MOV R1,#200
+02F4 D9FE            181              LOOP3:  DJNZ R1, LOOP3
+02F6 D8FA            182              DJNZ R0, LOOP4
+02F8 DAF6            183              DJNZ R2,LOOP5
+02FA D002            184              POP 2
+A51 MACRO ASSEMBLER  LABWORK2                                                             09/24/2018 14:12:07 PAGE     4
+
+02FC D001            185              POP 1
+02FE D000            186              POP 0 
+0300 22              187              RET 
+                     188     ;----------------------------------------------------------------
+0301                 189     DETECT: 
+                     190             USING 0
+0301 C000            191             PUSH AR0
+0303 C007            192             PUSH AR7
+0305 C002            193             PUSH AR2
+0307 C003            194             PUSH AR3
+0309 C004            195             PUSH AR4
+030B C005            196             PUSH AR5
+030D C006            197             PUSH AR6
+030F AA90            198             MOV R2,P1
+0311 AB90            199             MOV R3,P1
+                     200     
+0313 EA              201             MOV A,R2
+0314 54F0            202             ANL A,#0F0H
+                     203     
+0316                 204             ROW_0:
+0316 B47004          205                 CJNE A,#70H , ROW_1
+0319 7C00            206                 MOV R4,#00H
+031B 8013            207                 SJMP NEXT
+031D                 208             ROW_1:
+031D B4B004          209                 CJNE A,#0B0H , ROW_2
+0320 7C01            210                 MOV R4,#01H
+0322 800C            211                 SJMP NEXT
+0324                 212             ROW_2:
+0324 B4D004          213                 CJNE A,#0D0H , ROW_3
+0327 7C02            214                 MOV R4,#02H
+0329 8005            215                 SJMP NEXT   
+032B                 216             ROW_3:
+032B B4E04E          217                     CJNE A,#0E0H,DONE
+032E 7C03            218                 MOV R4,#03H
+                     219             
+0330                 220         NEXT: 
+0330 75900F          221             MOV P1,#0FH
+0333 E590            222             MOV A,P1
+0335 540F            223             ANL A,#0FH
+                     224     
+0337                 225             COLUMN_0:
+0337 B40E04          226                 CJNE A,#0EH , COLUMN_1
+033A 7D00            227                 MOV R5,#00H
+033C 8013            228                 SJMP CHECK
+033E                 229             COLUMN_1:
+033E B40D04          230                 CJNE A,#0DH , COLUMN_2
+0341 7D01            231                 MOV R5,#01H
+0343 800C            232                 SJMP CHECK
+0345                 233             COLUMN_2:
+0345 B40B04          234                 CJNE A,#0BH , COLUMN_3
+0348 7D02            235                 MOV R5,#02H
+034A 8005            236                 SJMP CHECK
+034C                 237             COLUMN_3:
+034C B4072D          238                     CJNE A,#07H,DONE
+034F 7D03            239                 MOV R5,#03H
+                     240               
+                     241             
+0351                 242         CHECK:      
+0351 75F004          243             MOV B,#04
+0354 EC              244             MOV A,R4
+0355 A4              245             MUL AB
+                     246     
+0356 2D              247             ADD A,R5
+0357 FE              248             MOV R6,A
+                     249             
+0358 FF              250             MOV R7,A
+A51 MACRO ASSEMBLER  LABWORK2                                                             09/24/2018 14:12:07 PAGE     5
+
+0359 7409            251             MOV A,#09H
+035B 9F              252             SUBB A,R7
+035C 4010            253             JC ALPHABET
+                     254             
+035E EF              255             MOV A,R7
+035F 2430            256             ADD A,#30H
+0361 755D30          257             MOV 5DH,#30H
+0364 F55E            258             MOV 5EH,A
+0366 755F00          259             MOV 5FH,#00H
+0369 120200          260             LCALL START
+036C 800E            261             SJMP DONE
+                     262             
+036E                 263             ALPHABET:
+036E EF              264             MOV A,R7
+036F 2437            265             ADD A,#37H
+0371 755D30          266             MOV 5DH,#30H     ;FOR WRITING 0
+0374 F55E            267             MOV 5EH,A
+0376 755F00          268             MOV 5FH,#00H
+0379 120200          269             LCALL START
+037C                 270          DONE:      
+037C D006            271             POP AR6
+037E D005            272             POP AR5
+0380 D004            273             POP AR4
+0382 D003            274             POP AR3
+0384 D002            275             POP AR2
+0386 D007            276             POP AR7
+0388 D000            277             POP AR0
+038A 22              278     RET
+                     279     
+038B                 280     DELAY_10MS:
+                     281         USING 0
+038B C004            282         PUSH AR4
+038D C003            283         PUSH AR3
+038F 7CC8            284         MOV R4,#200
+0391                 285         BACK1:
+0391 7B32            286             MOV R3,#50
+0393                 287         BACK :
+0393 DBFE            288             DJNZ R3, BACK
+0395 DCFA            289             DJNZ R4, BACK1
+0397 D003            290         POP AR3
+0399 D004            291         POP AR4     
+039B 22              292             RET
+                     293     
+                     294     
+                     295     
+039C                 296     ISR:
+                     297         USING 0
+039C C002            298             PUSH AR2
+                     299     
+039E 12038B          300             LCALL DELAY_10MS
+03A1 AA90            301             MOV R2,P1
+03A3 BAF003          302             CJNE R2,#0F0H , GO
+03A6 D002            303             POP AR2
+03A8 32              304             RETI
+03A9                 305             GO: 
+03A9 120301          306             LCALL DETECT
+03AC E59E            307             MOV A,9EH     ;AFTER READING THIS FLAG OF INTERRUPT BECOME ZERO 
+03AE 12025B          308             LCALL LCD_INIT
+                     309             
+03B1 7590F0          310             MOV P1,#0F0H     
+03B4 D002            311             POP AR2
+03B6 32              312             RETI
+                     313       
+03B7                 314     MAIN:
+03B7 75504B          315             MOV 50H,#4BH
+03BA 755145          316             MOV 51H,#45H
+A51 MACRO ASSEMBLER  LABWORK2                                                             09/24/2018 14:12:07 PAGE     6
+
+03BD 755259          317             MOV 52H,#59H
+03C0 755320          318             MOV 53H,#20H
+03C3 755450          319             MOV 54H,#50H
+03C6 755552          320             MOV 55H,#52H
+03C9 755645          321             MOV 56H,#45H
+03CC 755753          322             MOV 57H,#53H
+03CF 755853          323             MOV 58H,#53H
+03D2 755945          324             MOV 59H,#45H
+03D5 755A44          325             MOV 5AH,#44H
+03D8 755B20          326             MOV 5BH,#20H
+03DB 755C3A          327             MOV 5CH,#3AH
+                     328             
+03DE 7860            329     MOV R0,#60H
+03E0 7641            330     MOV @R0,#41H
+03E2 08              331     INC R0
+03E3 7642            332     MOV @R0,#42H
+03E5 08              333     INC R0
+03E6 7643            334     MOV @R0,#43H
+03E8 08              335     INC R0
+03E9 7644            336     MOV @R0,#44H
+03EB 08              337     INC R0
+03EC 7645            338     MOV @R0,#45H
+03EE 08              339     INC R0
+03EF 7646            340     MOV @R0,#46H
+03F1 08              341     INC R0
+03F2 7647            342     MOV @R0,#47H
+03F4 08              343     INC R0
+03F5 7648            344     MOV @R0,#48H
+03F7 08              345     INC R0
+03F8 7649            346     MOV @R0,#49H
+03FA 08              347     INC R0
+03FB 764A            348     MOV @R0,#4AH
+03FD 08              349     INC R0
+03FE 764B            350     MOV @R0,#4BH
+0400 08              351     INC R0
+0401 764C            352     MOV @R0,#4CH
+0403 08              353     INC R0
+0404 764D            354     MOV @R0,#4DH
+0406 08              355     INC R0
+0407 764E            356     MOV @R0,#4EH
+0409 08              357     INC R0
+040A 764F            358     MOV @R0,#4FH
+040C 08              359     INC R0
+040D 7650            360     MOV @R0,#50H
+040F 08              361     INC R0
+0410 7600            362     MOV @R0,#0H
+                     363     
+                     364     ;------- KEYPAD CONFIGURATION------------
+0412 7590F0          365     MOV P1,#0F0H            ;MSB AS ROW, LSB AS COLUMN                                         
+                                                          
+0415 D2AF            366     SETB IE.7
+                     367     
+0417 E5B1            368     MOV A,0B1H              ;IEN1, INTERRUPT ENABLE REGISTER
+0419 4401            369     ORL A,#01               ;CHANGING ONLY THE REQUIRED BIT, WITHOUT CHANGING THE OTHER BITS
+041B F5B1            370     MOV 0B1H,A                      
+                     371     
+041D 759C0F          372     MOV 9CH,#0FH            ;KBLS (LEVEL SELECTOR), MSB AS ROW, LSB AS COLUMN
+0420 759DF0          373     MOV 9DH,#0F0H           ;KBE (KEYBOARD ENABLE) MSB AS INTERRUPT, LSB AS I/O
+                     374     
+                     375     
+                     376     ;FOR MORE INFORMATION ABOUT KBE, KBLS, KBF READ THE DATASHEET FROM PAGE NO. 84
+                     377     ;----------------------------------------
+0423                 378     HERE:   
+0423 7860            379             MOV R0,#60H                        ;
+                     380     
+0425 12025B          381             LCALL LCD_INIT  
+A51 MACRO ASSEMBLER  LABWORK2                                                             09/24/2018 14:12:07 PAGE     7
+
+                     382             
+0428 7590F0          383             MOV P1,#0F0H
+                     384             
+042B 120238          385             LCALL START2    ;WILL KEEP DISPLAYING ABCD.....
+042E 80F3            386             SJMP HERE
+                     387     END
+A51 MACRO ASSEMBLER  LABWORK2                                                             09/24/2018 14:12:07 PAGE     8
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                        T Y P E  V A L U E   ATTRIBUTES
+
+ALPHABET. . . . . . . . . . .  C ADDR   036EH   A   
+AR0 . . . . . . . . . . . . .  D ADDR   0000H   A   
+AR2 . . . . . . . . . . . . .  D ADDR   0002H   A   
+AR3 . . . . . . . . . . . . .  D ADDR   0003H   A   
+AR4 . . . . . . . . . . . . .  D ADDR   0004H   A   
+AR5 . . . . . . . . . . . . .  D ADDR   0005H   A   
+AR6 . . . . . . . . . . . . .  D ADDR   0006H   A   
+AR7 . . . . . . . . . . . . .  D ADDR   0007H   A   
+B . . . . . . . . . . . . . .  D ADDR   00F0H   A   
+BACK. . . . . . . . . . . . .  C ADDR   0393H   A   
+BACK1 . . . . . . . . . . . .  C ADDR   0391H   A   
+CHECK . . . . . . . . . . . .  C ADDR   0351H   A   
+COLUMN_0. . . . . . . . . . .  C ADDR   0337H   A   
+COLUMN_1. . . . . . . . . . .  C ADDR   033EH   A   
+COLUMN_2. . . . . . . . . . .  C ADDR   0345H   A   
+COLUMN_3. . . . . . . . . . .  C ADDR   034CH   A   
+DELAY . . . . . . . . . . . .  C ADDR   02D7H   A   
+DELAY2. . . . . . . . . . . .  C ADDR   02E8H   A   
+DELAY_10MS. . . . . . . . . .  C ADDR   038BH   A   
+DETECT. . . . . . . . . . . .  C ADDR   0301H   A   
+DONE. . . . . . . . . . . . .  C ADDR   037CH   A   
+EXIT2 . . . . . . . . . . . .  C ADDR   02C3H   A   
+EXIT2_2 . . . . . . . . . . .  C ADDR   02D4H   A   
+GO. . . . . . . . . . . . . .  C ADDR   03A9H   A   
+HERE. . . . . . . . . . . . .  C ADDR   0423H   A   
+IE. . . . . . . . . . . . . .  D ADDR   00A8H   A   
+ISR . . . . . . . . . . . . .  C ADDR   039CH   A   
+LCD_COMMAND . . . . . . . . .  C ADDR   0298H   A   
+LCD_DATA. . . . . . . . . . .  D ADDR   00A0H   A   
+LCD_EN. . . . . . . . . . . .  B ADDR   0080H.2 A   
+LCD_INIT. . . . . . . . . . .  C ADDR   025BH   A   
+LCD_RS. . . . . . . . . . . .  B ADDR   0080H.0 A   
+LCD_RW. . . . . . . . . . . .  B ADDR   0080H.1 A   
+LCD_SENDDATA. . . . . . . . .  C ADDR   02A7H   A   
+LCD_SENDSTRING_FROM_RAM . . .  C ADDR   02B8H   A   
+LCD_SENDSTRING_FROM_RAM2. . .  C ADDR   02C6H   A   
+LCD_SENDSTRING_FROM_RAM_LOOP.  C ADDR   02BAH   A   
+LCD_SENDSTRING_FROM_RAM_LOOP2  C ADDR   02C8H   A   
+LOOP1 . . . . . . . . . . . .  C ADDR   02DFH   A   
+LOOP2 . . . . . . . . . . . .  C ADDR   02DDH   A   
+LOOP3 . . . . . . . . . . . .  C ADDR   02F4H   A   
+LOOP4 . . . . . . . . . . . .  C ADDR   02F2H   A   
+LOOP5 . . . . . . . . . . . .  C ADDR   02F0H   A   
+MAIN. . . . . . . . . . . . .  C ADDR   03B7H   A   
+NEXT. . . . . . . . . . . . .  C ADDR   0330H   A   
+P0. . . . . . . . . . . . . .  D ADDR   0080H   A   
+P1. . . . . . . . . . . . . .  D ADDR   0090H   A   
+P2. . . . . . . . . . . . . .  D ADDR   00A0H   A   
+ROW_0 . . . . . . . . . . . .  C ADDR   0316H   A   
+ROW_1 . . . . . . . . . . . .  C ADDR   031DH   A   
+ROW_2 . . . . . . . . . . . .  C ADDR   0324H   A   
+ROW_3 . . . . . . . . . . . .  C ADDR   032BH   A   
+START . . . . . . . . . . . .  C ADDR   0200H   A   
+START2. . . . . . . . . . . .  C ADDR   0238H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

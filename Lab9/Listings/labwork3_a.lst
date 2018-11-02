@@ -1,0 +1,207 @@
+C51 COMPILER V9.54   LABWORK3_A                                                            10/30/2018 16:04:37 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE LABWORK3_A
+OBJECT MODULE PLACED IN .\Objects\labwork3_a.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ADSR\labwork3_a.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Li
+                    -stings\labwork3_a.lst) TABS(2) OBJECT(.\Objects\labwork3_a.obj)
+
+line level    source
+
+   1          //Generate waveform at P3_6
+   2          
+   3          #include "at89c5131.h"
+   4          
+   5          
+   6          void timer_init();
+   7          void SPI_Init();
+   8          sbit C0 = P1^7;
+   9          sbit CS_BAR = P3^4;                 // Chip Select for the ADC
+  10          sbit FS = P3^5;
+  11          bit transmit_completed= 0;              // To check if spi data transmit is complete
+  12          bit offset_null = 0;                // Check if offset nulling is enabled
+  13          bit roundoff = 0;
+  14          
+  15          bit wave = 0;
+  16          
+  17          
+  18          unsigned long adcVal=0 , sum = 0,tempadcVal=0 ,temp_low,temp_high,try0=0;
+  19          unsigned int voltage = 0;                                                            // 16 bit
+  20          unsigned int voltage2 = 0;
+  21          
+  22          unsigned int avgVal=0, initVal=0, adcValue = 0 , temp=0 ;
+  23          unsigned int m = 0;
+  24          
+  25          unsigned char serial_data,MSB = 0,LSB = 0;
+  26          unsigned char data_save_high;
+  27          unsigned char data_save_low;
+  28          unsigned char count=0, i=0;
+  29          float fweight=0;
+  30          
+  31          
+  32          char high=239,low=190;
+  33                            
+  34          
+  35          unsigned char x=1;
+  36          
+  37          char test [] = {0xEF,0xBE,  0xF1,0x8C,  0xF2,0xFE,  0xF3,0xCE,
+  38                          0xF5,0x29,  0xF6,0x3F,  0xF7,0x50,  0xF7,0xDF,
+  39                          0xF7,0xDF,  0xF7,0x50,  0xF6,0x3F,  0xF5,0x29,
+  40                          0xF3,0xCE,  0xF2,0xFE,  0xF1,0x8C,  0xEF,0xBE 
+  41                           
+  42          };       // for t1
+  43          
+  44          void main(void)
+  45          {
+  46   1        CS_BAR = 1;
+  47   1        FS = 1;
+  48   1        SPI_Init();
+  49   1        timer_init();
+  50   1        while(1)
+  51   1        {
+  52   2          CS_BAR = 0;
+  53   2          FS = 0;                                   // falling edge of CS bar
+  54   2      
+C51 COMPILER V9.54   LABWORK3_A                                                            10/30/2018 16:04:37 PAGE 2   
+
+  55   2          SPDAT= MSB;                             // first 4 bits will be address of the channel
+  56   2          while(!transmit_completed);               // wait for the transmit complete flag
+  57   2          transmit_completed = 0;                   // make the flag 0
+  58   2      
+  59   2          SPDAT = LSB;
+  60   2          while(!transmit_completed);
+  61   2          transmit_completed = 0;
+  62   2      
+  63   2          CS_BAR = 1;
+  64   2          FS = 1;
+  65   2                                // save the 10 bits in one variable
+  66   2        }
+  67   1        
+  68   1      }
+  69          
+  70          
+  71          void timer_init()
+  72          {
+  73   1       TMOD=0x11;   
+  74   1       TL1 =190;  
+  75   1       TH1 =239;
+  76   1        
+  77   1       TL0 =0xAF;     
+  78   1       TH0 =0x3C;
+  79   1        
+  80   1        EA=1;
+  81   1        ET0=1;
+  82   1        ET1=1;
+  83   1        TR0=1;
+  84   1        //TR1=1;
+  85   1        
+  86   1      } 
+  87          
+  88          
+  89          void TIMER1_ISR (void) interrupt 3
+  90          {
+  91   1      
+  92   1        TR1=0;
+  93   1        TL1 = low ;
+  94   1        TH1 = high;
+  95   1          wave  = ~wave;
+  96   1        voltage2 = voltage*wave;
+  97   1      
+  98   1        LSB = voltage*wave;
+  99   1        MSB = (voltage*wave)/256;
+ 100   1        TR1=1;
+ 101   1          
+ 102   1      }
+ 103          
+ 104          void TIMER0_ISR (void) interrupt 1
+ 105          {
+ 106   1      
+ 107   1      TR0=0;
+ 108   1        TL0 =0xAF;
+ 109   1        TH0 =0x3C;
+ 110   1        m++;
+ 111   1        x--;
+ 112   1        if(x==0)
+ 113   1        {
+ 114   2            if(i==32)
+ 115   2          {
+ 116   3            TR0=0;
+C51 COMPILER V9.54   LABWORK3_A                                                            10/30/2018 16:04:37 PAGE 3   
+
+ 117   3            TR1=0;
+ 118   3          }
+ 119   2          else
+ 120   2          {
+ 121   3          P3_7 = ~P3_7;
+ 122   3          high= test[i];
+ 123   3          low= test[i+1];
+ 124   3        i=i+2;
+ 125   3          x=40;
+ 126   3        TR1=1;
+ 127   3          }
+ 128   2        }
+ 129   1        
+ 130   1        if(m<=24){
+ 131   2        voltage = 170*m;
+ 132   2        }
+ 133   1      
+ 134   1        
+ 135   1        if(m>48 && m <=120){
+ 136   2        voltage = 6840 - 57*m;
+ 137   2        }
+ 138   1      
+ 139   1        
+ 140   1        if(m==120){
+ 141   2        m = 0;
+ 142   2        }
+ 143   1        
+ 144   1        TR0=1;
+ 145   1      }
+ 146          
+ 147          void SPI_Init()
+ 148          {
+ 149   1        FS = 1;
+ 150   1        CS_BAR = 1;                     // DISABLE ADC SLAVE SELECT-CS
+ 151   1        SPCON |= 0x20;                  // P1.1(SSBAR) is available as standard I/O pin
+ 152   1        SPCON |= 0x01;                  // Fclk Periph/4 AND Fclk Periph=12MHz ,HENCE SCK IE. BAUD RATE=3000KHz
+ 153   1        SPCON |= 0x10;                  // Master mode
+ 154   1        SPCON |= 0x08;                // CPOL=0; transmit mode example|| SCK is 0 at idle state
+ 155   1        SPCON &= ~0x04;                 // CPHA=1; transmit mode example
+ 156   1        IEN1 |= 0x04;                   // enable spi interrupt
+ 157   1        EA=1;                           // enable interrupts
+ 158   1        SPCON |= 0x40;                  // run spi;ENABLE SPI INTERFACE SPEN= 1
+ 159   1      }
+ 160          
+ 161          void it_SPI(void) interrupt 9 /* interrupt address is 0x004B, (Address -3)/8 = interrupt no.*/
+ 162          {
+ 163   1        switch  ( SPSTA )         /* read and clear spi status register */
+ 164   1        {
+ 165   2          case 0x80:
+ 166   2            serial_data=SPDAT;   /* read receive data */
+ 167   2            transmit_completed=1;/* set software flag */
+ 168   2          break;
+ 169   2      
+ 170   2          case 0x10:
+ 171   2      
+ 172   2          break;
+ 173   2      
+ 174   2          case 0x40:
+ 175   2          break;
+ 176   2        }
+ 177   1      }
+
+C51 COMPILER V9.54   LABWORK3_A                                                            10/30/2018 16:04:37 PAGE 4   
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    375    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     84    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      4    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

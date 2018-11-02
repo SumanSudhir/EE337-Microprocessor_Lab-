@@ -1,0 +1,3 @@
+".\Objects\labwork2.obj" 
+TO ".\Objects\lab7project" 
+PRINT(".\Listings\lab7project.m51") RAMSIZE(256) 

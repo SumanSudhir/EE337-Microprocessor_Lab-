@@ -1,0 +1,99 @@
+A51 MACRO ASSEMBLER  QUESTION1                                                            10/06/2018 12:16:34 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\question1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE question1.asm SET(SMALL) DEBUG PRINT(.\Listings\question1.lst) OBJECT(.
+                      \Objects\question1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+0000                   2     ORG 00H
+0000 020053            3     LJMP MAIN
+                       4     
+000B                   5     ORG 000BH                                                       ;ISR FOR TIMER 0
+000B 020030            6     LJMP ISR_T0
+                       7     
+0030                   8     ORG 30H
+                       9     
+0030                  10     ISR_T0:
+0030 DA04             11             DJNZ R2,CONTINUE
+0032 B297             12             CPL P1.7                    ;MONITOR WHICH FREQUENCY TO TAKE
+0034 7A28             13             MOV R2,#40
+0036                  14     CONTINUE:
+0036 C28C             15             CLR TR0
+0038 12003E           16             LCALL TWOS_T0               ;DELAY OF 1S
+003B D28C             17             SETB TR0
+003D 32               18     RETI
+                      19     
+003E                  20     TWOS_T0:
+                      21             USING 0
+003E C000             22                     PUSH AR0
+0040 7851             23                     MOV R0,#51H         ;INDIRECT READ FROM MEMORY LOCATION 81H
+0042 E6               24                     MOV A,@R0
+0043 F4               25                     CPL A                           ;COMPLEMENT OF A
+0044 C3               26                     CLR C
+0045 2401             27                     ADD A,#01               ;ADD 1 TO MAKE IT 2'S COMPLEMENT
+0047 F58A             28                     MOV TL0,A          
+0049 08               29                     INC R0              ;CARRY FLAG IS NOT AFFECTED BY INC
+004A E6               30                     MOV A,@R0
+004B F4               31                     CPL A               ;COMPLEMENT OF ANOTHER BYTE
+004C 3400             32                     ADDC A,#00H         ;WILL ADD CARRY IF GENERATED FROM LOWER BYTE
+004E F58C             33                     MOV TH0,A      
+0050 D000             34                     POP AR0
+0052 22               35     RET
+                      36     
+                      37     
+                      38     
+0053                  39     MAIN:
+                      40     
+0053 758901           41             MOV TMOD,#01H                           ;                   TIMER 0, MODE 1
+                      42             ;MOV IE,#82H 
+                      43     
+0056 D2AF             44             SETB EA
+0058 D2A9             45             SETB ET0
+                      46             
+                      47     
+005A 7851             48             MOV R0,#51H
+005C 7650             49             MOV @R0,#50H                            ;MAX N = 65,536   FFFFH
+005E 08               50             INC R0                                          ;SETTING N = 50,000  FOR GETTING DE
+                             LAY = 25MSEC
+005F 76C3             51             MOV @R0,#0C3H
+                      52             
+0061 12003E           53             LCALL TWOS_T0
+0064 7A28             54             MOV R2,#40
+0066 D287             55             SETB P0.7
+0068 D28C             56             SETB TR0
+A51 MACRO ASSEMBLER  QUESTION1                                                            10/06/2018 12:16:34 PAGE     2
+
+006A 80FE             57             HERE:SJMP HERE
+                      58     END
+A51 MACRO ASSEMBLER  QUESTION1                                                            10/06/2018 12:16:34 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR0. . . . . . . .  D ADDR   0000H   A   
+CONTINUE . . . . .  C ADDR   0036H   A   
+EA . . . . . . . .  B ADDR   00A8H.7 A   
+ET0. . . . . . . .  B ADDR   00A8H.1 A   
+HERE . . . . . . .  C ADDR   006AH   A   
+ISR_T0 . . . . . .  C ADDR   0030H   A   
+MAIN . . . . . . .  C ADDR   0053H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+TWOS_T0. . . . . .  C ADDR   003EH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

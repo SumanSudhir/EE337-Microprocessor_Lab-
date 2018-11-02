@@ -364,9 +364,9 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>SHUFFLEBITSNEW.ASM</FileName>
+              <FileName>labwork2.asm</FileName>
               <FileType>2</FileType>
-              <FilePath>.\SHUFFLEBITSNEW.ASM</FilePath>
+              <FilePath>.\labwork2.asm</FilePath>
             </File>
           </Files>
         </Group>

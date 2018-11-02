@@ -1,0 +1,174 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        10/27/2018  13:47:19  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\part2.obj TO .\Objects\endsem PRINT (.\Listings\endsem.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL WITH FLOATING POINT ARITHMETIC
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\part2.obj (PART2)
+  C:\KEIL_V5\C51\LIB\C51FPS.LIB (?C?FPADD)
+  C:\KEIL_V5\C51\LIB\C51FPS.LIB (?C?FPMUL)
+  C:\KEIL_V5\C51\LIB\C51FPS.LIB (?C?FCAST)
+  C:\KEIL_V5\C51\LIB\C51FPS.LIB (?C?CASTF)
+  C:\KEIL_V5\C51\LIB\C51FPS.LIB (?C?FPGETOPN)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?LNEG)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\endsem (PART2)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000CH     UNIT         ?DT?PART2
+            IDATA   0014H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     07F2H                  *** GAP ***
+            CODE    0800H     02CBH     UNIT         ?C?LIB_CODE
+            CODE    0ACBH     010EH     UNIT         ?PR?TIMER0_ISR?PART2
+            CODE    0BD9H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0C65H     0019H     UNIT         ?C_INITSEG
+            CODE    0C7EH     0010H     UNIT         ?PR?TIMER_INIT?PART2
+            CODE    0C8EH     0005H     UNIT         ?PR?MAIN?PART2
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\endsem (PART2)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?PART2
+  +--> ?C_INITSEG
+
+?PR?MAIN?PART2
+  +--> ?PR?TIMER_INIT?PART2
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/27/2018  13:47:19  PAGE 2
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\endsem (PART2)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        PART2
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  C:0ACBH         PUBLIC        TIMER0_ISR
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IEN0
+  D:00B8H         PUBLIC        IPL0
+  B:00B0H.7       PUBLIC        P3_7
+  D:00D8H         PUBLIC        CCON
+  C:0C8EH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:0C7EH         PUBLIC        timer_init
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  D:00F8H         PUBLIC        UEPINT
+  D:00C8H         PUBLIC        T2CON
+  D:0008H         PUBLIC        i
+  D:000AH         PUBLIC        m
+  D:000CH         PUBLIC        p
+  D:000EH         PUBLIC        q
+  D:0010H         PUBLIC        x
+  D:0012H         PUBLIC        y
+  -------         PROC          TIMER_INIT
+  C:0C7EH         LINE#         10
+  C:0C7EH         LINE#         11
+  C:0C7EH         LINE#         12
+  C:0C81H         LINE#         14
+  C:0C84H         LINE#         15
+  C:0C87H         LINE#         16
+  C:0C89H         LINE#         17
+  C:0C8BH         LINE#         18
+  C:0C8DH         LINE#         19
+  -------         ENDPROC       TIMER_INIT
+  -------         PROC          TIMER0_ISR
+  C:0ACBH         LINE#         23
+  C:0AE8H         LINE#         25
+  C:0AEAH         LINE#         26
+  C:0AECH         LINE#         27
+  C:0AF4H         LINE#         28
+  C:0B00H         LINE#         29
+  C:0B40H         LINE#         30
+  C:0B80H         LINE#         31
+  C:0B86H         LINE#         32
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/27/2018  13:47:19  PAGE 3
+
+
+  C:0B8CH         LINE#         33
+  C:0B98H         LINE#         35
+  C:0B98H         LINE#         37
+  C:0BA0H         LINE#         38
+  C:0BA4H         LINE#         39
+  C:0BA8H         LINE#         40
+  C:0BACH         LINE#         41
+  C:0BB0H         LINE#         42
+  C:0BB6H         LINE#         43
+  C:0BB6H         LINE#         45
+  C:0BB9H         LINE#         46
+  C:0BBCH         LINE#         47
+  C:0BBEH         LINE#         49
+  -------         ENDPROC       TIMER0_ISR
+  -------         PROC          MAIN
+  C:0C8EH         LINE#         51
+  C:0C8EH         LINE#         52
+  C:0C91H         LINE#         53
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        PART2
+
+  -------         MODULE        ?C?FPADD
+  C:0807H         PUBLIC        ?C?FPADD
+  C:0803H         PUBLIC        ?C?FPSUB
+  -------         ENDMOD        ?C?FPADD
+
+  -------         MODULE        ?C?FPMUL
+  C:08F8H         PUBLIC        ?C?FPMUL
+  -------         ENDMOD        ?C?FPMUL
+
+  -------         MODULE        ?C?FCAST
+  C:0A08H         PUBLIC        ?C?FCASTC
+  C:0A03H         PUBLIC        ?C?FCASTI
+  C:09FEH         PUBLIC        ?C?FCASTL
+  -------         ENDMOD        ?C?FCAST
+
+  -------         MODULE        ?C?CASTF
+  C:0A3CH         PUBLIC        ?C?CASTF
+  -------         ENDMOD        ?C?CASTF
+
+  -------         MODULE        ?C?LNEG
+  C:0ABDH         PUBLIC        ?C?LNEG
+  -------         ENDMOD        ?C?LNEG
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 013EH BYTE (15%) *
+******************************************************************************
+
+Program Size: data=21.0 xdata=0 code=1177
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

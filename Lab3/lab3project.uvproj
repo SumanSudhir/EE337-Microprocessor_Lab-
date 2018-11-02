@@ -364,9 +364,9 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>lab3q3.asm</FileName>
+              <FileName>lab3q2.2.asm</FileName>
               <FileType>2</FileType>
-              <FilePath>.\lab3q3.asm</FilePath>
+              <FilePath>.\lab3q2.2.asm</FilePath>
             </File>
           </Files>
         </Group>

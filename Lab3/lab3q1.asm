@@ -12,7 +12,7 @@ DELAY:
 
 	MOV R3,A
 LOOP:
-	MOV R2,#200
+	MOV R2,#200 											;;;DELAY OF 50MS*A
 	BACK1:
 	MOV R1,#0FFH
 	BACK :
@@ -32,7 +32,7 @@ RET
 			SETB P1.3
 			
 			TOGGLE:
-					MOV A, P1
+					MOV A, P1                        ;20*50MS = 1SEC/4
 					ANL A,#0FH
 					MOV B, #5
 					MUL AB

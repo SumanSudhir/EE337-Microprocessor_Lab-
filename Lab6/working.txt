@@ -1,0 +1,419 @@
+; This subroutine writes characters on the LCD
+LCD_data equ P2    ;LCD Data port
+LCD_rs   equ P0.0  ;LCD Register Select
+LCD_rw   equ P0.1  ;LCD Read/Write
+LCD_en   equ P0.2  ;LCD Enable
+
+ORG 0000H
+ljmp main
+
+org 003BH
+	ljmp ISR
+	
+org 200h
+start:
+      mov P2,#00h
+     ; mov P1,#00h
+	  ;initial delay for lcd power up
+
+	;here1:setb p1.0
+      	  acall delay
+	;clr p1.0
+	  acall delay
+	;sjmp here1
+
+
+	  acall lcd_init      ;initialise LCD
+	
+	  acall delay
+	  acall delay
+	  acall delay
+	 
+
+	  mov a,#080h		 
+	  acall lcd_command
+	  acall delay
+	  mov   R0,#50h
+	  acall lcd_sendstring_from_ram
+lcall delay2
+lcall delay2
+lcall delay2
+lcall delay2
+lcall delay2
+lcall delay2
+lcall delay2
+lcall delay2
+lcall delay2
+	lcall delay2
+ret		//stay here 
+
+
+start2:
+      using 0 
+		  push ar7
+	  mov P2,#00h
+	  
+     ; mov P1,#00h
+	  ;initial delay for lcd power up
+
+	;here1:setb p1.0
+      	  acall delay
+	;clr p1.0
+	  acall delay
+	;sjmp here1
+
+      mov a,r0
+	  subb a,#60h
+	  add a,#80h
+	  mov r7,a
+	  acall lcd_init      ;initialise LCD
+	
+	  acall delay
+	  acall delay
+	  acall delay
+	 
+
+	  mov a,r7	  ;Put cursor on second row,3 column
+	  acall lcd_command
+	  acall delay
+	  mov   R0,#60h
+	  acall lcd_sendstring_from_ram2
+pop ar7
+	ret			//stay here 
+
+;------------------------LCD Initialisation routine----------------------------------------------------
+lcd_init:
+         mov   LCD_data,#38H  ;Function set: 2 Line, 8-bit, 5x7 dots
+         clr   LCD_rs         ;Selected command register
+         clr   LCD_rw         ;We are writing in instruction register
+         setb  LCD_en         ;Enable H->L
+		 acall delay
+         clr   LCD_en
+	     acall delay
+
+         mov   LCD_data,#0CH  ;Display on, Curson off
+         clr   LCD_rs         ;Selected instruction register
+         clr   LCD_rw         ;We are writing in instruction register
+         setb  LCD_en         ;Enable H->L
+		 acall delay
+         clr   LCD_en
+         
+		 acall delay
+         mov   LCD_data,#01H  ;Clear LCD
+         clr   LCD_rs         ;Selected command register
+         clr   LCD_rw         ;We are writing in instruction register
+         setb  LCD_en         ;Enable H->L
+		 acall delay
+         clr   LCD_en
+         
+		 acall delay
+
+         mov   LCD_data,#06H  ;Entry mode, auto increment with no shift
+         clr   LCD_rs         ;Selected command register
+         clr   LCD_rw         ;We are writing in instruction register
+         setb  LCD_en         ;Enable H->L
+		 acall delay
+         clr   LCD_en
+
+		 acall delay
+         
+         ret                  ;Return from routine
+
+;-----------------------command sending routine-------------------------------------
+ lcd_command:
+         mov   LCD_data,A     ;Move the command to LCD port
+         clr   LCD_rs         ;Selected command register
+         clr   LCD_rw         ;We are writing in instruction register
+         setb  LCD_en         ;Enable H->L
+		 acall delay
+         clr   LCD_en
+		 acall delay
+    
+         ret  
+;-----------------------data sending routine-------------------------------------		     
+ lcd_senddata:
+         mov   LCD_data,A     ;Move the command to LCD port
+         setb  LCD_rs         ;Selected data register
+         clr   LCD_rw         ;We are writing
+         setb  LCD_en         ;Enable H->L
+		 acall delay
+         clr   LCD_en
+         acall delay
+		 acall delay
+         ret                  ;Return from busy routine
+
+
+;----------------------------------------------------------------------------------------------
+lcd_sendstring_from_ram:
+push 0e0h
+;lcall delay2
+	lcd_sendstring_from_ram_loop:
+	 	 clr   a                 ;clear Accumulator for any previous data
+	         mov  a,@R0         ;load the first character in accumulator
+	         jz    exit2              ;go to exit if zero
+	         acall lcd_senddata		;send first char
+			; lcall delay2
+	         inc   R0              ;increment data pointer
+	         sjmp  LCD_sendstring_from_ram_loop    ;jump back to send the next character
+exit2:    pop 0e0h
+         ret                     ;End of routine
+		 
+lcd_sendstring_from_ram2:
+push 0e0h
+;lcall delay2
+	lcd_sendstring_from_ram_loop2:
+	 	 clr   a                 ;clear Accumulator for any previous data
+	         mov  a,@R0         ;load the first character in accumulator
+	         jz    exit2_2              ;go to exit if zero
+	         acall lcd_senddata		;send first char
+			 lcall delay2
+			 ;mov p1,#0f0h
+	         inc   R0              ;increment data pointer
+	         sjmp  LCD_sendstring_from_ram_loop2    ;jump back to send the next character
+exit2_2:    pop 0e0h
+         ret                     ;End of routine		 
+
+;----------------------delay routine-----------------------------------------------------
+delay:	 push 0
+	 push 1
+         mov r0,#1
+loop2:	 mov r1,#255
+	 loop1:	 djnz r1, loop1
+	 djnz r0, loop2
+	 pop 1
+	 pop 0 
+	 ret
+	 
+delay2:	 push 0
+	 push 1
+	 push 2
+	 mov r2,#10
+     loop5:    mov r0,#50
+loop4:	 mov r1,#200
+	 loop3:	 djnz r1, loop3
+	 djnz r0, loop4
+	 djnz r2,loop5
+	 pop 2
+	 pop 1
+	 pop 0 
+	 ret 
+
+detect:	
+	USING 0
+	push aR0
+	push aR7
+	push aR2
+	push aR3
+	push aR4
+	push aR5
+	push aR6
+	mov R2,p1
+	mov R3,p1
+
+	mov a,R2
+	anl a,#0f0h
+
+	row_0:
+	    cjne a,#70H , row_1
+	    mov R4,#00h
+	    sjmp next
+	row_1:
+	    cjne a,#0B0H , row_2
+	    mov R4,#01h
+	    sjmp next
+	row_2:
+	    cjne a,#0D0H , row_3
+	    mov R4,#02h
+	    sjmp next	
+	row_3:
+		cjne a,#0e0h,done
+	    mov R4,#03h
+	
+    next: 
+;	mov a,p1
+	;orl a,#0fh
+	mov p1,#0fh
+	mov a,p1
+	anl a,#0fh
+
+	column_0:
+	    cjne a,#0EH , column_1
+	    mov R5,#00h
+	    sjmp check
+	column_1:
+	    cjne a,#0DH , column_2
+	    mov R5,#01h
+	    sjmp check
+	column_2:
+	    cjne a,#0BH , column_3
+	    mov R5,#02h
+	    sjmp check
+	column_3:
+		cjne a,#07h,done
+	    mov R5,#03h
+	  
+	
+    check:	
+	;mov a,r4
+	;add a,#30H
+;	mov r4,a
+;	mov 60h,r4
+;	mov a,r5
+;	add a,#30H
+;	mov r5,a	
+;	mov 61h,r5
+;	mov 62h,#00h
+;	lcall start
+	mov b,#04
+	mov a,r4
+	mul ab
+
+	add a,r5
+	mov r6,a
+	
+	mov r7,a
+	mov a,#09H
+	subb a,r7
+	jc alphabet
+	mov a,r7
+	add a,#30H
+	mov 5dh,#30h
+	mov 5eh,a
+	mov 5fh,#00h
+	lcall start
+	sjmp done
+	
+	alphabet:
+	mov a,r7
+	add a,#37H
+	mov 5dh,#30h
+	mov 5eh,a
+	mov 5fh,#00h
+	lcall start
+     done:	
+	pop aR6
+	pop aR5
+	pop aR4
+	pop aR3
+	pop aR2
+	pop aR7
+	pop aR0
+RET
+
+DELAY_10ms:
+    using 0
+    push aR4
+    push aR3
+    MOV R4,#200
+    BACK1:
+        MOV R3,#50
+    BACK :
+        DJNZ R3, BACK
+        DJNZ R4, BACK1
+    pop aR3
+    pop aR4	
+	RET
+
+
+
+ISR:
+    using 0
+	push aR2
+
+	lcall DELAY_10ms
+	mov R2,P1
+	cjne r2,#0f0h , go
+	pop aR2
+	RETI
+	go: 
+	;mov R2,P1
+	;lcall DELAY_10ms
+	;mov a ,P1
+	;subb a,r2
+	;jz key_is_pressed
+	;pop aR2
+	;RETI
+	;key_is_pressed: 
+	;mov a,p1
+	;orl a,#0fh
+;	mov p1,a
+	lcall detect
+	mov a,9eh
+	lcall lcd_init
+	mov p1,#0f0h	
+	pop aR2
+	RETI
+  
+MAIN:
+
+	mov 50h,#4bh
+	mov 51h,#45h
+	mov 52h,#59h
+	mov 53h,#20h
+	mov 54h,#50h
+	mov 55h,#52h
+	mov 56h,#45h
+	mov 57h,#53h
+	mov 58h,#53h
+	mov 59h,#45h
+	mov 5ah,#44h
+	mov 5bh,#20h
+	mov 5ch,#3Ah
+	
+mov R0,#60h
+mov @R0,#41h
+inc R0
+mov @R0,#42h
+inc R0
+mov @R0,#43h
+inc R0
+mov @R0,#44h
+inc R0
+mov @R0,#45h
+inc R0
+mov @R0,#46h
+inc R0
+mov @R0,#47h
+inc R0
+mov @R0,#48h
+inc R0
+mov @R0,#49h
+inc R0
+mov @R0,#4ah
+inc R0
+mov @R0,#4bh
+inc R0
+mov @R0,#4ch
+inc R0
+mov @R0,#4dh
+inc R0
+mov @R0,#4eh
+inc R0
+mov @R0,#4fh
+inc R0
+mov @R0,#50h
+inc r0
+mov @r0,#0h
+
+mov r0,#60h
+;------- keypad configuration------------
+mov p1,#0f0h		;MSB as row, LSB as column									
+setb IE.7
+
+mov a,0b1h		;IEN1, interrupt enable register
+ORL a,#01		;changing only the required bit, without changing the other bits
+mov 0b1h,a			
+
+mov 9cH,#0Fh		;KBLS (level selector), MSB as row, LSB as column
+mov 9dH,#0f0h		;KBE (Keyboard enable) MSB as interrupt, LSB as I/O
+
+
+;For more information about KBE, KBLS, KBF read the datasheet from page no. 84
+;----------------------------------------
+	
+	lcall lcd_init	
+	
+	mov p1,#0f0h
+	lcall start2
+	SJMP main
+END
